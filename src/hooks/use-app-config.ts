@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import { configApi } from '@/apis/api';
 
 /**
- * Hook to fetch OIDC configuration from the backend
- * @returns Object containing oidcEnabled flag and oidcLoading state
+ * Hook to fetch public application configuration from the backend.
  */
-export function useOidcConfig() {
+export function useAppConfig() {
   const [oidcEnabled, setOidcEnabled] = useState<boolean>(false);
-  const [oidcLoading, setOidcLoading] = useState(true);
+  const [emailEnabled, setEmailEnabled] = useState<boolean>(false);
+  const [configLoading, setConfigLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
@@ -16,18 +16,20 @@ export function useOidcConfig() {
       .then((config) => {
         if (isMounted) {
           setOidcEnabled(config.oidcEnabled);
+          setEmailEnabled(config.emailEnabled);
         }
       })
       .catch((err) => {
-        console.error('Failed to fetch OIDC config:', err);
+        console.error('Failed to fetch app config:', err);
         if (isMounted) {
           // Default to false if fetch fails
           setOidcEnabled(false);
+          setEmailEnabled(false);
         }
       })
       .finally(() => {
         if (isMounted) {
-          setOidcLoading(false);
+          setConfigLoading(false);
         }
       });
 
@@ -36,5 +38,5 @@ export function useOidcConfig() {
     };
   }, []);
 
-  return { oidcEnabled, oidcLoading };
+  return { oidcEnabled, emailEnabled, configLoading };
 }

@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PATH } from '@/const/path';
 import useAuth from '@/hooks/use-auth';
-import { useOidcConfig } from '@/hooks/use-oidc-config';
+import { useAppConfig } from '@/hooks/use-app-config';
 import { cn } from '@/lib/utils';
 
 const STEP = {
@@ -44,9 +44,10 @@ export function LoginForm({
   const [step, setStep] = useState<Step>(STEP.EMAIL);
   const [magicLinkFeedback, setMagicLinkFeedback] = useState<MagicLinkFeedback | null>(null);
   const [magicLinkLoading, setMagicLinkLoading] = useState(false);
-  const { oidcEnabled, oidcLoading } = useOidcConfig();
+  const { oidcEnabled, emailEnabled, configLoading } = useAppConfig();
   const magicLinkMessage = magicLinkFeedback?.message;
   const magicLinkStatus = magicLinkFeedback?.status;
+  const showMagicLinkOption = !configLoading && emailEnabled;
 
   const resetMagicLinkFeedback = () => setMagicLinkFeedback(null);
 
@@ -58,7 +59,7 @@ export function LoginForm({
   };
 
   const renderMagicLinkFeedback = () => {
-    if (!magicLinkMessage) {
+    if (!showMagicLinkOption || !magicLinkMessage) {
       return null;
     }
 
@@ -85,7 +86,8 @@ export function LoginForm({
       return;
     }
     setEmail(normalizedEmail);
-    setStep(STEP.OPTIONS);
+    const nextStep = !configLoading && !emailEnabled ? STEP.PASSWORD : STEP.OPTIONS;
+    setStep(nextStep);
     resetMagicLinkFeedback();
   };
 
@@ -116,6 +118,9 @@ export function LoginForm({
 
   const handleMagicLink = async () => {
     const normalizedEmail = email.trim();
+    if (!showMagicLinkOption) {
+      return;
+    }
     if (!normalizedEmail) {
       showMagicLinkFeedback('error', 'Enter your email address to receive a magic link.');
       return;
@@ -197,19 +202,23 @@ export function LoginForm({
                   />
                 </div>
                 <div className="rounded-md border border-dashed border-border bg-muted/40 p-4 text-sm text-muted-foreground">
-                  Choose how you&apos;d like to sign in.
+                  {showMagicLinkOption
+                    ? 'Choose how you\'d like to sign in.'
+                    : 'Enter your password to continue.'}
                 </div>
                 <div className="grid gap-3">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full"
-                    onClick={handleMagicLink}
-                    disabled={magicLinkLoading}
-                  >
-                    <Mail className="h-4 w-4" aria-hidden="true" />
-                    {magicLinkLoading ? 'Sending magic link...' : 'Send magic link'}
-                  </Button>
+                  {showMagicLinkOption && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="w-full"
+                      onClick={handleMagicLink}
+                      disabled={magicLinkLoading}
+                    >
+                      <Mail className="h-4 w-4" aria-hidden="true" />
+                      {magicLinkLoading ? 'Sending magic link...' : 'Send magic link'}
+                    </Button>
+                  )}
                   <Button type="button" className="w-full" onClick={() => setStep(STEP.PASSWORD)}>
                     <Lock className="h-4 w-4" aria-hidden="true" />
                     Enter password
@@ -267,17 +276,19 @@ export function LoginForm({
                   >
                     Forgot password?
                   </Button>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="px-2 text-sm"
-                    onClick={handleMagicLink}
-                    disabled={magicLinkLoading}
-                  >
-                    <Mail className="h-4 w-4" aria-hidden="true" />
-                    {magicLinkLoading ? 'Sending magic link...' : 'Send magic link instead'}
-                  </Button>
+                  {showMagicLinkOption && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="px-2 text-sm"
+                      onClick={handleMagicLink}
+                      disabled={magicLinkLoading}
+                    >
+                      <Mail className="h-4 w-4" aria-hidden="true" />
+                      {magicLinkLoading ? 'Sending magic link...' : 'Send magic link instead'}
+                    </Button>
+                  )}
                 </div>
                 {renderMagicLinkFeedback()}
                 {error && <div className="text-red-500 text-sm">{error}</div>}
@@ -295,7 +306,7 @@ export function LoginForm({
               </form>
             )}
 
-            {!oidcLoading && oidcEnabled && (
+            {!configLoading && oidcEnabled && (
               <>
                 <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                   <span className="bg-card text-muted-foreground relative z-10 px-2">
