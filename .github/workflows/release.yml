@@ -1,0 +1,275 @@
+name: Release
+on:
+  push:
+    # run only against tags
+    tags:
+      - v*
+permissions:
+  contents: write
+  pull-requests: read
+  packages: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: "1.24"
+          cache: true
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          package_json_file: ./apps/web/package.json
+          run_install: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: pnpm
+          cache-dependency-path: ./apps/web/pnpm-lock.yaml
+      - name: Install frontend dependencies
+        working-directory: ./apps/web
+        run: pnpm install
+      - name: Build frontend
+        working-directory: ./apps/web
+        run: pnpm build
+      - name: Build Server Binaries
+        run: |
+          VERSION=${{ github.ref_name }}
+          COMMIT=$(git rev-parse --short HEAD)
+          LDFLAGS="-X github.com/lwshen/vault-hub/internal/version.Version=${VERSION} -X github.com/lwshen/vault-hub/internal/version.Commit=${COMMIT}"
+
+          echo "Building server binaries with version: $VERSION, commit: $COMMIT"
+          echo "LDFLAGS: $LDFLAGS"
+
+          # Create bin directory if it doesn't exist
+          mkdir -p bin
+
+          # Linux builds
+          echo "Building Linux AMD64..."
+          GOOS=linux GOARCH=amd64 go build -ldflags="$LDFLAGS" -o bin/vault-hub-server-linux-amd64 apps/server/main.go
+          echo "✓ Built vault-hub-server-linux-amd64"
+
+          echo "Building Linux ARM64..."
+          GOOS=linux GOARCH=arm64 go build -ldflags="$LDFLAGS" -o bin/vault-hub-server-linux-arm64 apps/server/main.go
+          echo "✓ Built vault-hub-server-linux-arm64"
+
+          # Windows builds
+          echo "Building Windows AMD64..."
+          GOOS=windows GOARCH=amd64 go build -ldflags="$LDFLAGS" -o bin/vault-hub-server-windows-amd64.exe apps/server/main.go
+          echo "✓ Built vault-hub-server-windows-amd64.exe"
+
+          # macOS builds
+          echo "Building macOS AMD64..."
+          GOOS=darwin GOARCH=amd64 go build -ldflags="$LDFLAGS" -o bin/vault-hub-server-darwin-amd64 apps/server/main.go
+          echo "✓ Built vault-hub-server-darwin-amd64"
+
+          echo "Building macOS ARM64..."
+          GOOS=darwin GOARCH=arm64 go build -ldflags="$LDFLAGS" -o bin/vault-hub-server-darwin-arm64 apps/server/main.go
+          echo "✓ Built vault-hub-server-darwin-arm64"
+
+          echo "All server binaries built successfully!"
+          echo "Listing built files:"
+          ls -la bin/vault-hub-server-*
+      - name: Build CLI Binaries
+        run: |
+          VERSION=${{ github.ref_name }}
+          COMMIT=$(git rev-parse --short HEAD)
+          LDFLAGS="-X github.com/lwshen/vault-hub/internal/version.Version=${VERSION} -X github.com/lwshen/vault-hub/internal/version.Commit=${COMMIT}"
+
+          echo "Building CLI binaries with version: $VERSION, commit: $COMMIT"
+          echo "LDFLAGS: $LDFLAGS"
+
+          # Create bin directory if it doesn't exist
+          mkdir -p bin
+
+          # Linux builds
+          echo "Building CLI Linux AMD64..."
+          GOOS=linux GOARCH=amd64 go build -ldflags="$LDFLAGS" -o bin/vault-hub-cli-linux-amd64 apps/cli/main.go
+          echo "✓ Built vault-hub-cli-linux-amd64"
+
+          echo "Building CLI Linux ARM64..."
+          GOOS=linux GOARCH=arm64 go build -ldflags="$LDFLAGS" -o bin/vault-hub-cli-linux-arm64 apps/cli/main.go
+          echo "✓ Built vault-hub-cli-linux-arm64"
+
+          # Windows builds
+          echo "Building CLI Windows AMD64..."
+          GOOS=windows GOARCH=amd64 go build -ldflags="$LDFLAGS" -o bin/vault-hub-cli-windows-amd64.exe apps/cli/main.go
+          echo "✓ Built vault-hub-cli-windows-amd64.exe"
+
+          # macOS builds
+          echo "Building CLI macOS AMD64..."
+          GOOS=darwin GOARCH=amd64 go build -ldflags="$LDFLAGS" -o bin/vault-hub-cli-darwin-amd64 apps/cli/main.go
+          echo "✓ Built vault-hub-cli-darwin-amd64"
+
+          echo "Building CLI macOS ARM64..."
+          GOOS=darwin GOARCH=arm64 go build -ldflags="$LDFLAGS" -o bin/vault-hub-cli-darwin-arm64 apps/cli/main.go
+          echo "✓ Built vault-hub-cli-darwin-arm64"
+
+          echo "All CLI binaries built successfully!"
+          echo "Listing built files:"
+          ls -la bin/vault-hub-cli-*
+      - name: Upload Release Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          files: |
+            bin/vault-hub-server-*
+            bin/vault-hub-cli-*
+  publish-clients:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: "1.24"
+          cache: true
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          registry-url: https://registry.npmjs.org
+      - name: Generate TypeScript Fetch Client Library
+        uses: openapi-generators/openapitools-generator-action@v1
+        with:
+          generator: typescript-fetch
+          openapi-file: packages/api/openapi/api.yaml
+          generator-tag: v7.13.0
+          command-args: --additional-properties=npmName=@lwshen/vault-hub-ts-fetch-client --additional-properties=npmVersion=${{ github.ref_name }} --additional-properties=useSingleRequestParameter=false --git-user-id lwshen --git-repo-id vault-hub
+      - name: Build TypeScript Client
+        run: |
+          cd typescript-fetch-client
+          npm install
+          npm run build
+      - name: Publish TypeScript Client
+        run: |
+          cd typescript-fetch-client
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Generate Go Client Library
+        uses: openapi-generators/openapitools-generator-action@v1
+        with:
+          generator: go
+          openapi-file: packages/api/openapi/api.yaml
+          generator-tag: v7.13.0
+          command-args: --additional-properties=packageVersion=${{ github.ref_name }} --additional-properties=moduleName=github.com/lwshen/vault-hub-go-client --git-user-id lwshen --git-repo-id vault-hub-go-client
+      - name: Ensure LICENSE is included
+        run: cp LICENSE go-client/LICENSE
+      - name: Initialize Go module and publish
+        run: |
+          # Prepare generated client
+          cd go-client
+          go mod tidy
+          go build ./...
+
+          # Create repository if it doesn't exist and push
+          cd ..
+
+          # Configure git identity
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Clone existing repository to preserve history
+          git clone https://${{ secrets.PUBLISH_TOKEN }}@github.com/lwshen/vault-hub-go-client.git publish-repo
+          cd publish-repo
+
+          # Ensure we are on main (create if missing)
+          git checkout -B main || git checkout -b main
+
+          # Replace repository contents (except .git) with newly generated client
+          find . -mindepth 1 -maxdepth 1 ! -name ".git" -exec rm -rf {} +
+          cp -R ../go-client/. .
+
+          # Commit changes only if there are modifications
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Release ${{ github.ref_name }}"
+          fi
+
+          # Tag the release
+          git tag ${{ github.ref_name }}
+
+          # Push to separate repository
+          git push origin main
+          git push origin ${{ github.ref_name }}
+  changelog:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+      - publish-clients
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Generate Full Changelog
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --verbose
+        env:
+          OUTPUT: CHANGELOG.md
+          GITHUB_REPO: ${{ github.repository }}
+      - name: Generate Release Changelog
+        id: generate_changelog
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --verbose --latest --strip header
+        env:
+          OUTPUT: CHANGELOG_RELEASE.md
+          GITHUB_REPO: ${{ github.repository }}
+      - name: Set Release Body
+        id: set_release_body
+        run: |
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          cat CHANGELOG_RELEASE.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      - name: Release Note
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          body: ${{steps.set_release_body.outputs.changelog}}
+      - name: Configure Git and Switch to Main
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          # Switch to main branch (we're in detached HEAD from tag checkout)
+          git checkout main
+          git pull origin main
+      - name: Create Pull Request for Changelog
+        id: cpr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          add-paths: |
+            CHANGELOG.md
+          labels: |
+            changelog
+            automated
+            chore
+          branch: chore/update-changelog-${{ github.ref_name }}
+          delete-branch: true
+          title: "chore(release): update CHANGELOG.md for ${{ github.ref_name }}"
+          commit-message: "chore(release): update CHANGELOG.md for ${{ github.ref_name }}"
+          body: |
+            This PR was automatically generated by the release workflow.
+            Please review the changelog updates and merge if everything looks good.
+
+            ## 🤖 Automation Info
+              - Workflow: `${{ github.workflow }}`
+              - Run ID: `${{ github.run_id }}`
+              - Commit: `${{ github.sha }}`
+              - Release: `${{ github.ref_name }}`
+
+            ## 📝 Changelog Updates
+            The CHANGELOG.md file has been updated with the latest release notes.
