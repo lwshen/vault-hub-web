@@ -14,7 +14,7 @@ import { FaOpenid } from 'react-icons/fa';
 import { useLocation } from 'wouter';
 import { PATH } from '@/const/path';
 import useAuth from '@/hooks/use-auth';
-import { useOidcConfig } from '@/hooks/use-oidc-config';
+import { useAppConfig } from '@/hooks/use-app-config';
 
 export function SignupForm({
   className,
@@ -31,7 +31,7 @@ export function SignupForm({
   });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const { oidcEnabled, oidcLoading } = useOidcConfig();
+  const { oidcEnabled, configLoading } = useAppConfig();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -108,7 +108,7 @@ export function SignupForm({
                   {loading ? 'Creating account...' : 'Create account'}
                 </Button>
               </div>
-              {!oidcLoading && oidcEnabled && (
+              {!configLoading && oidcEnabled && (
                 <>
                   <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                     <span className="bg-card text-muted-foreground relative z-10 px-2">
