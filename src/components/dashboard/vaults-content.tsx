@@ -10,6 +10,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { useVaultStore } from '@/stores/vault-store';
 import type { VaultLite } from '@lwshen/vault-hub-ts-fetch-client';
 import {
@@ -35,6 +50,12 @@ export default function VaultsContent() {
     isDeleting,
     fetchVaults,
     deleteVault,
+    totalCount,
+    totalPages,
+    pageSize,
+    pageIndex,
+    setPageIndex,
+    setPageSize,
   } = useVaultStore();
 
   const [, navigate] = useLocation();
@@ -90,6 +111,15 @@ export default function VaultsContent() {
     fetchVaults(); // Refresh the vault list after update
   };
 
+  const handlePageChange = (page: number) => {
+    setPageIndex(page);
+  };
+
+  const handlePageSizeChange = (newPageSize: string) => {
+    const size = parseInt(newPageSize);
+    setPageSize(size);
+  };
+
   const renderContent = () => {
     if (error) {
       return (
@@ -135,66 +165,144 @@ export default function VaultsContent() {
             </div>
           </Card>
         ) : (
-          <div className="grid gap-4">
-            {vaults.map((vault) => (
-              <Card key={vault.uniqueId} className="p-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <Lock className="h-5 w-5 text-blue-500" />
-                    <div>
-                      <h3 className="text-lg font-semibold">{vault.name}</h3>
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                        {vault.category && (
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300">
-                            {vault.category}
-                          </span>
-                        )}
-                        {vault.description && <span>{vault.description}</span>}
-                        {vault.updatedAt && (
-                          <span>Last Updated {new Date(vault.updatedAt).toLocaleDateString()}</span>
-                        )}
+          <>
+            <div className="grid gap-4">
+              {vaults.map((vault) => (
+                <Card key={vault.uniqueId} className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <Lock className="h-5 w-5 text-blue-500" />
+                      <div>
+                        <h3 className="text-lg font-semibold">{vault.name}</h3>
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          {vault.category && (
+                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300">
+                              {vault.category}
+                            </span>
+                          )}
+                          {vault.description && <span>{vault.description}</span>}
+                          {vault.updatedAt && (
+                            <span>Last Updated {new Date(vault.updatedAt).toLocaleDateString()}</span>
+                          )}
+                        </div>
                       </div>
                     </div>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleViewVaultValue(vault)}
+                        title="View Value"
+                      >
+                        <Eye className="h-4 w-4" />
+                      </Button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="outline" size="sm">
+                            <MoreVertical className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem onClick={() => handleEditVaultValue(vault)}>
+                            <Key className="h-4 w-4" />
+                            Edit Value
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => handleEditVault(vault)}>
+                            <Edit className="h-4 w-4" />
+                            Edit Properties
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem
+                            onClick={() => handleDeleteVault(vault)}
+                            variant="destructive"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                            Delete Vault
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
                   </div>
+                </Card>
+              ))}
+            </div>
+
+            {/* Pagination Controls */}
+            {totalCount > 0 && (
+              <div className="mt-6">
+                {/* Controls - responsive layout */}
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
                   <div className="flex items-center gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleViewVaultValue(vault)}
-                      title="View Value"
-                    >
-                      <Eye className="h-4 w-4" />
-                    </Button>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="outline" size="sm">
-                          <MoreVertical className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => handleEditVaultValue(vault)}>
-                          <Key className="h-4 w-4" />
-                          Edit Value
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleEditVault(vault)}>
-                          <Edit className="h-4 w-4" />
-                          Edit Properties
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                          onClick={() => handleDeleteVault(vault)}
-                          variant="destructive"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                          Delete Vault
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <span className="text-sm text-muted-foreground">Show</span>
+                    <Select value={pageSize.toString()} onValueChange={handlePageSizeChange}>
+                      <SelectTrigger className="w-20">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="10">10</SelectItem>
+                        <SelectItem value="20">20</SelectItem>
+                        <SelectItem value="50">50</SelectItem>
+                        <SelectItem value="100">100</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <span className="text-sm text-muted-foreground">per page</span>
                   </div>
+
+                  <p className="text-sm text-muted-foreground">
+                    Showing {((pageIndex - 1) * pageSize) + 1}-{Math.min(pageIndex * pageSize, totalCount)} of {totalCount} vaults
+                  </p>
                 </div>
-              </Card>
-            ))}
-          </div>
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <div className="flex justify-center">
+                    <Pagination>
+                      <PaginationContent>
+                        <PaginationItem>
+                          <PaginationPrevious
+                            onClick={() => handlePageChange(pageIndex - 1)}
+                            className={pageIndex <= 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                          />
+                        </PaginationItem>
+
+                        {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                          let pageNum;
+                          if (totalPages <= 5) {
+                            pageNum = i + 1;
+                          } else if (pageIndex <= 3) {
+                            pageNum = i + 1;
+                          } else if (pageIndex >= totalPages - 2) {
+                            pageNum = totalPages - 4 + i;
+                          } else {
+                            pageNum = pageIndex - 2 + i;
+                          }
+
+                          return (
+                            <PaginationItem key={pageNum}>
+                              <PaginationLink
+                                onClick={() => handlePageChange(pageNum)}
+                                isActive={pageIndex === pageNum}
+                                className="cursor-pointer"
+                              >
+                                {pageNum}
+                              </PaginationLink>
+                            </PaginationItem>
+                          );
+                        })}
+
+                        <PaginationItem>
+                          <PaginationNext
+                            onClick={() => handlePageChange(pageIndex + 1)}
+                            className={pageIndex >= totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                          />
+                        </PaginationItem>
+                      </PaginationContent>
+                    </Pagination>
+                  </div>
+                )}
+              </div>
+            )}
+          </>
         )}
       </main>
     );
