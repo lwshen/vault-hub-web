@@ -84,24 +84,83 @@ Once VaultHub is running, you can create your first vault through the web interf
 
 ## Health Monitoring
 
-VaultHub provides a comprehensive health check endpoint:
+VaultHub provides a comprehensive health check endpoint at `/api/status` that returns detailed system status information.
+
+### Status Endpoint
 
 ```bash
-# Check system status
+# Check system status (no authentication required)
 curl http://localhost:3000/api/status
-
-# Response includes:
-# - Application version and commit
-# - Database health and performance metrics
-# - System resource utilization
-# - Overall health status: healthy, degraded, or unavailable
 ```
 
+### Response Format
+
+```json
+{
+  "version": "v1.4.3",
+  "commit": "abc1234",
+  "systemStatus": "healthy",
+  "databaseStatus": "healthy"
+}
+```
+
+### Status Levels
+
+The endpoint returns one of three status levels for both system and database:
+
+| Status | Description | When It Occurs |
+|--------|-------------|----------------|
+| `healthy` | System operating normally | All checks pass, resources within normal limits |
+| `degraded` | System operational with issues | High resource usage, slow responses, but still functional |
+| `unavailable` | System not operational | Database unreachable, critical failures |
+
+### Response Fields
+
+- **version**: Application version (from git tags or "dev")
+- **commit**: Git commit hash (short form)
+- **systemStatus**: Overall system health status
+- **databaseStatus**: Database connection and performance status
+
+### Use Cases
+
 Use this endpoint for:
-- Load balancer health checks
-- Monitoring system alerts
-- Container orchestration health probes
-- CI/CD deployment verification
+- **Load balancer health checks**: Configure health checks to verify `systemStatus` and `databaseStatus` are not `unavailable`
+- **Monitoring system alerts**: Alert when status changes from `healthy` to `degraded` or `unavailable`
+- **Container orchestration**: Kubernetes liveness and readiness probes
+- **CI/CD deployment verification**: Verify deployment succeeded before routing traffic
+- **Service dashboards**: Display real-time service health and version information
+
+### Example Health Check Configurations
+
+**Docker Healthcheck:**
+```dockerfile
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=40s \
+  CMD wget --quiet --tries=1 --spider http://localhost:3000/api/status || exit 1
+```
+
+**Kubernetes Probes:**
+```yaml
+livenessProbe:
+  httpGet:
+    path: /api/status
+    port: 3000
+  initialDelaySeconds: 30
+  periodSeconds: 10
+readinessProbe:
+  httpGet:
+    path: /api/status
+    port: 3000
+  initialDelaySeconds: 5
+  periodSeconds: 5
+```
+
+**Nginx Health Check:**
+```nginx
+location /health {
+  proxy_pass http://localhost:3000/api/status;
+  access_log off;
+}
+```
 
 ## Production Deployment
 
@@ -476,6 +535,79 @@ VaultHub automatically handles database migrations on startup. When switching be
 2. Update `DATABASE_TYPE` and `DATABASE_URL`
 3. Restart VaultHub - tables will be created automatically
 4. Import your data if migrating from another system
+
+## Authentication Methods
+
+VaultHub supports multiple authentication methods to fit different use cases and security requirements.
+
+### Email-Based Authentication
+
+VaultHub includes built-in email authentication with two passwordless options:
+
+#### Magic Link Authentication
+
+Magic links provide secure, passwordless authentication via email.
+
+**How It Works:**
+1. User enters their email address
+2. System sends a one-time magic link to their email
+3. User clicks the link to authenticate
+4. System redirects to dashboard with JWT token
+
+**Requirements:**
+- Email service configured (SMTP or email provider)
+- User must have an existing account
+
+**Rate Limiting:**
+- Maximum 3 requests per email within 15 minutes
+- Returns 429 (Too Many Requests) with `Retry-After` header when exceeded
+
+**Use Cases:**
+- Quick authentication without password
+- Mobile-friendly login experience
+- Reduced password fatigue
+- Enhanced security (no password to compromise)
+
+#### Password Reset
+
+Users can reset their passwords through email verification.
+
+**How It Works:**
+1. User requests password reset with their email
+2. System sends reset link with temporary token
+3. User clicks link and enters new password
+4. Password is updated securely
+
+**Security Features:**
+- Token expires after configurable time period
+- Rate limited to prevent abuse (same limits as magic links)
+- Tokens are single-use only
+- Password complexity requirements enforced
+
+**Rate Limiting:**
+- Maximum 3 requests per email within 15 minutes
+- Returns 429 (Too Many Requests) with `Retry-After` header when exceeded
+
+### Email Configuration
+
+To enable magic link and password reset features, configure your email settings:
+
+```bash
+# Email service configuration (example with SMTP)
+export EMAIL_FROM="noreply@yourdomain.com"
+export SMTP_HOST="smtp.gmail.com"
+export SMTP_PORT="587"
+export SMTP_USERNAME="your-email@gmail.com"
+export SMTP_PASSWORD="your-app-password"
+export SMTP_TLS="true"
+
+# Or use email service providers (SendGrid, Mailgun, etc.)
+export EMAIL_PROVIDER="sendgrid"
+export SENDGRID_API_KEY="your-sendgrid-api-key"
+export EMAIL_FROM="noreply@yourdomain.com"
+```
+
+**Note:** Without email configuration, magic link and password reset features will be disabled, but standard email/password authentication will still work.
 
 ## OIDC Authentication Setup
 

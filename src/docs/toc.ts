@@ -35,7 +35,7 @@ export const documentationTOC: TOCItem[] = [
 
 // Helper functions
 export const getDocumentationItem = (id: string): TOCItem | undefined => {
-  return documentationTOC.find(item => item.id === id);
+  return documentationTOC.find((item) => item.id === id);
 };
 
 export const getDefaultDocumentation = (): TOCItem => {

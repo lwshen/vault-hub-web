@@ -41,15 +41,151 @@ All vault values are encrypted using AES-256-GCM before being stored in the data
    - Original plaintext is never persisted
    - Encryption keys are never stored with data
 
+### Client-Side Encryption (CLI/API)
+
+In addition to server-side AES-256-GCM encryption, VaultHub supports **optional client-side encryption** for CLI and programmatic access, providing defense-in-depth security.
+
+**How It Works:**
+
+1. **Server-Side Layer** (always active):
+   - All vault values encrypted with AES-256-GCM
+   - Encryption key from `ENCRYPTION_KEY` environment variable
+   - Stored encrypted in database
+
+2. **Client-Side Layer** (optional, enabled by default in CLI):
+   - Additional encryption applied before transmission
+   - Key derived using PBKDF2 from: API key + vault unique ID (as salt)
+   - Each vault gets unique client-side encryption key
+   - No key exchange required - deterministic derivation
+
+**Security Benefits:**
+
+- **Defense in Depth**: Two independent encryption layers
+- **Per-Vault Keys**: Each vault has unique client-side encryption key
+- **Network Protection**: Even if HTTPS fails, data remains encrypted
+- **API Key Derivation**: Client-side keys derived from API keys
+- **Zero Trust**: Server never sees plaintext with client-side encryption
+
+**Usage:**
+
+```bash
+# CLI enables client-side encryption by default
+vault-hub get --name production-secrets
+
+# Server applies both encryptions:
+# 1. Server-side AES-256-GCM (always)
+# 2. Client-side encryption (if header present)
+
+# Disable client-side encryption if needed
+vault-hub get --name production-secrets --no-client-encryption
+```
+
+**API Header:**
+
+```bash
+# Enable client-side encryption via API
+curl -X GET http://localhost:3000/api/cli/vault/name/production-secrets \
+  -H "Authorization: Bearer vhub_your_api_key_here" \
+  -H "X-Enable-Client-Encryption: true"
+```
+
+**When to Use:**
+
+- **Maximum Security**: Enable for production environments
+- **Untrusted Networks**: Protection even if TLS is compromised
+- **Compliance**: Additional layer for regulatory requirements
+- **Defense in Depth**: Multiple independent security controls
+
+**When to Disable:**
+
+- **Debugging**: Easier to inspect server responses
+- **Custom Clients**: If implementing own decryption
+- **Performance**: Slight overhead from additional encryption layer (minimal)
+
+**Key Derivation Details:**
+
+```
+Client Key = PBKDF2(
+  password: API Key,
+  salt: Vault Unique ID,
+  iterations: 10000,
+  keyLength: 32 bytes
+)
+```
+
+This ensures:
+- Same API key + same vault = same derived key (deterministic)
+- Different vaults = different keys (even with same API key)
+- No key storage or transmission needed
+- Computationally expensive to brute force
+
 ## Access Control
 
 ### Authentication Methods
 
-VaultHub supports multiple authentication mechanisms:
+VaultHub supports multiple authentication mechanisms for different use cases:
 
-- **🔐 JWT tokens** for web access
-- **🔑 API keys** for programmatic access  
-- **🌐 OIDC integration** (optional)
+#### Email/Password Authentication
+
+Traditional authentication with email and password.
+
+- **Registration**: Users create accounts with email and password
+- **Password Hashing**: Bcrypt with salt for password storage
+- **Session Management**: JWT tokens with configurable expiration
+- **Security**: Passwords never stored in plaintext
+
+#### Magic Link Authentication (Passwordless)
+
+Secure, passwordless authentication via email.
+
+**How It Works:**
+1. User enters email address
+2. Server generates one-time token
+3. Email sent with magic link
+4. User clicks link to authenticate
+5. JWT token returned for session
+
+**Security Features:**
+- **One-time tokens**: Single use only, expire after use
+- **Time-limited**: Tokens expire after configured period
+- **Rate limiting**: Maximum 3 requests per 15 minutes per email
+- **Email verification**: Confirms user has access to email account
+
+**Benefits:**
+- No password to remember or compromise
+- Mobile-friendly authentication
+- Reduces password fatigue
+- Eliminates password-related attacks (brute force, credential stuffing)
+
+#### Password Reset
+
+Secure password reset via email verification.
+
+**Security Features:**
+- **One-time tokens**: Single use, expire after configured period
+- **Rate limiting**: 3 requests per 15 minutes per email
+- **Token invalidation**: Previous tokens invalidated on password change
+- **Email confirmation**: Only sent if account exists (privacy)
+
+#### OpenID Connect (OIDC)
+
+Enterprise authentication integration.
+
+- **Single Sign-On (SSO)**: Integration with corporate identity providers
+- **Supported Providers**: Auth0, Okta, Azure AD, Google, and others
+- **Standard Protocol**: OpenID Connect 1.0 compliant
+- **User Provisioning**: Automatic account creation on first login
+
+#### API Key Authentication
+
+Programmatic access for CLI and integrations.
+
+- **Long-lived Credentials**: No expiration unless revoked
+- **Vault Scoping**: Keys can be scoped to specific vaults
+- **Prefix System**: `vhub_` prefix for easy identification
+- **Revocable**: Keys can be deleted to immediately revoke access
+- **Audit Trail**: All API key usage logged
+- **Client-Side Encryption**: Supports optional encryption layer (see Encryption section)
 
 ### Route Protection
 
@@ -70,6 +206,33 @@ VaultHub supports multiple authentication mechanisms:
 - **Session management**: Secure session handling with expiration
 
 ## Security Best Practices
+
+### Rate Limiting
+
+VaultHub implements rate limiting to prevent abuse and protect against attacks:
+
+**Email-Based Authentication:**
+- Magic link requests: 3 per 15 minutes per email
+- Password reset requests: 3 per 15 minutes per email
+- Returns HTTP 429 with `Retry-After` header when exceeded
+
+**Purpose:**
+- **Prevent Abuse**: Limits email flooding and spam
+- **Resource Protection**: Reduces email service costs
+- **Attack Mitigation**: Slows down enumeration attacks
+- **Privacy**: Rate limits apply even for non-existent accounts
+
+**Implementation:**
+```bash
+# Rate limit response
+HTTP/1.1 429 Too Many Requests
+Retry-After: 900
+
+{
+  "error": "Rate limit exceeded",
+  "message": "Too many requests. Please try again later."
+}
+```
 
 ### Key Management
 
@@ -205,13 +368,17 @@ VaultHub is designed to help organizations meet security and compliance requirem
 
 | Control | Implementation |
 |---------|----------------|
-| Encryption at Rest | AES-256-GCM for all vault data |
+| Encryption at Rest | AES-256-GCM for all vault data (server-side, always active) |
+| Client-Side Encryption | Optional PBKDF2-derived per-vault encryption (CLI/API) |
 | Encryption in Transit | TLS 1.3 for all connections |
-| Authentication | Multi-factor support via OIDC |
-| Authorization | Role-based access control |
-| Audit Logging | Complete operation trail |
-| Backup & Recovery | Encrypted backup procedures |
-| Incident Response | Monitoring and alerting |
+| Authentication | Email/password, magic links, password reset, OIDC, API keys |
+| Multi-Factor | Support via OIDC providers |
+| Authorization | Role-based access control with vault scoping |
+| Rate Limiting | 3 requests per 15 minutes for email-based auth |
+| Audit Logging | Complete operation trail with IP and user agent tracking |
+| Session Management | JWT tokens with expiration, API keys with revocation |
+| Backup & Recovery | Encrypted backup procedures with key backup |
+| Incident Response | Monitoring, alerting, and comprehensive audit logs |
 
 ## Security Reporting
 
