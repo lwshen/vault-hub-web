@@ -24,6 +24,7 @@ Before you begin, ensure you have the following installed:
 - **Node.js** 22 or higher
 - **pnpm** 10.15.1 (specified in `package.json`)
 - **VaultHub Server** - The backend API server must be running (default: `http://localhost:3000`)
+  - Repository: https://github.com/lwshen/vault-hub
 
 ## Installation
 
@@ -40,20 +41,22 @@ cd vault-hub-web
 pnpm install
 ```
 
-3. Configure the API endpoint:
+3. Configure environment variables:
 
-The development server is configured to proxy API requests to `http://localhost:3000`. If your backend runs on a different port, update the proxy configuration in `vite.config.ts`:
+Copy the example environment file and configure it for your setup:
 
-```typescript
-server: {
-  proxy: {
-    '/api': {
-      target: 'http://localhost:YOUR_PORT',
-      changeOrigin: true,
-    },
-  },
-}
+```bash
+cp .env.example .env
 ```
+
+Edit `.env` to set your backend API URL:
+
+```env
+# Default: http://localhost:3000
+VITE_API_URL=http://localhost:3000
+```
+
+The development server will proxy all `/api` requests to the URL specified in `VITE_API_URL`. If not set, it defaults to `http://localhost:3000`.
 
 ## Available Scripts
 
@@ -96,22 +99,22 @@ pnpm typecheck
 
 ### Core
 
-- **React** 19.1 - UI library
-- **TypeScript** 5.9 - Type-safe JavaScript
-- **Vite** 7.1 - Build tool and dev server
+- **React** - UI library
+- **TypeScript** - Type-safe JavaScript
+- **Vite** - Build tool and dev server
 
 ### State Management
 
-- **Zustand** 5.0 - Lightweight state management
+- **Zustand** - Lightweight state management
 - **React Context** - Authentication state
 
 ### Routing
 
-- **Wouter** 3.7 - Minimalist client-side router
+- **Wouter** - Minimalist client-side router
 
 ### Styling
 
-- **Tailwind CSS** 4.1 - Utility-first CSS framework
+- **Tailwind CSS** - Utility-first CSS framework
 - **Radix UI** - Accessible component primitives
 - **Class Variance Authority** - Component variant management
 - **Framer Motion** - Animation library
@@ -119,7 +122,7 @@ pnpm typecheck
 
 ### API Integration
 
-- **@lwshen/vault-hub-ts-fetch-client** 1.4.3 - Generated TypeScript API client
+- **@lwshen/vault-hub-ts-fetch-client** - Generated TypeScript API client
 
 ### Additional Libraries
 
@@ -284,21 +287,3 @@ Built-in documentation is available in the app and includes:
 ## License
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
-
-Copyright 2025 Ryo Shen
-
-## Contributing
-
-Contributions are welcome! Please ensure:
-- Code passes `pnpm typecheck` and `pnpm lint`
-- Follow the existing code style and architecture patterns
-- Update documentation as needed
-
-## Related Projects
-
-- **VaultHub Server** - Backend API server (required)
-- **VaultHub CLI** - Command-line interface for VaultHub
-
----
-
-For detailed development guidance, see [CLAUDE.md](CLAUDE.md) for AI-assisted development instructions.
