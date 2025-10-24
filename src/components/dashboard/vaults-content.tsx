@@ -207,26 +207,26 @@ export default function VaultsContent() {
             {totalCount > 0 && (
               <div className="mt-6 flex items-center justify-between">
                 <div className="text-sm text-muted-foreground">
-                  Showing {pageIndex * pageSize + 1} to {Math.min((pageIndex + 1) * pageSize, totalCount)} of {totalCount} vaults
+                  Showing {(pageIndex - 1) * pageSize + 1} to {Math.min(pageIndex * pageSize, totalCount)} of {totalCount} vaults
                 </div>
                 <div className="flex items-center gap-2">
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => setPageIndex(pageIndex - 1)}
-                    disabled={pageIndex === 0 || isLoading}
+                    disabled={pageIndex === 1 || isLoading}
                   >
                     <ChevronLeft className="h-4 w-4" />
                     Previous
                   </Button>
                   <div className="text-sm text-muted-foreground">
-                    Page {pageIndex + 1} of {Math.ceil(totalCount / pageSize)}
+                    Page {pageIndex} of {Math.ceil(totalCount / pageSize)}
                   </div>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => setPageIndex(pageIndex + 1)}
-                    disabled={pageIndex >= Math.ceil(totalCount / pageSize) - 1 || isLoading}
+                    disabled={pageIndex >= Math.ceil(totalCount / pageSize) || isLoading}
                   >
                     Next
                     <ChevronRight className="h-4 w-4" />

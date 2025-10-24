@@ -30,7 +30,7 @@ const initialState: VaultState = {
   isDeleting: false,
   totalCount: 0,
   pageSize: 10,
-  pageIndex: 0,
+  pageIndex: 1,
 };
 
 export const useVaultStore = create<VaultStore>((set, get) => ({
@@ -79,8 +79,8 @@ export const useVaultStore = create<VaultStore>((set, get) => ({
   },
 
   setPageSize: (pageSize: number) => {
-    set({ pageSize, pageIndex: 0 });
-    get().fetchVaults(0, pageSize);
+    set({ pageSize, pageIndex: 1 });
+    get().fetchVaults(1, pageSize);
   },
 
   clearError: () => set({ error: null }),
