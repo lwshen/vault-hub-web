@@ -14,6 +14,8 @@ import { useVaultStore } from '@/stores/vault-store';
 import type { VaultLite } from '@lwshen/vault-hub-ts-fetch-client';
 import {
   AlertCircle,
+  ChevronLeft,
+  ChevronRight,
   Edit,
   Eye,
   Key,
@@ -35,6 +37,11 @@ export default function VaultsContent() {
     isDeleting,
     fetchVaults,
     deleteVault,
+    totalCount,
+    pageSize,
+    pageIndex,
+    setPageIndex,
+    setPageSize,
   } = useVaultStore();
 
   const [, navigate] = useLocation();
@@ -135,66 +142,100 @@ export default function VaultsContent() {
             </div>
           </Card>
         ) : (
-          <div className="grid gap-4">
-            {vaults.map((vault) => (
-              <Card key={vault.uniqueId} className="p-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <Lock className="h-5 w-5 text-blue-500" />
-                    <div>
-                      <h3 className="text-lg font-semibold">{vault.name}</h3>
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                        {vault.category && (
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300">
-                            {vault.category}
-                          </span>
-                        )}
-                        {vault.description && <span>{vault.description}</span>}
-                        {vault.updatedAt && (
-                          <span>Last Updated {new Date(vault.updatedAt).toLocaleDateString()}</span>
-                        )}
+          <>
+            <div className="grid gap-4">
+              {vaults.map((vault) => (
+                <Card key={vault.uniqueId} className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <Lock className="h-5 w-5 text-blue-500" />
+                      <div>
+                        <h3 className="text-lg font-semibold">{vault.name}</h3>
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          {vault.category && (
+                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300">
+                              {vault.category}
+                            </span>
+                          )}
+                          {vault.description && <span>{vault.description}</span>}
+                          {vault.updatedAt && (
+                            <span>Last Updated {new Date(vault.updatedAt).toLocaleDateString()}</span>
+                          )}
+                        </div>
                       </div>
                     </div>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleViewVaultValue(vault)}
+                        title="View Value"
+                      >
+                        <Eye className="h-4 w-4" />
+                      </Button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="outline" size="sm">
+                            <MoreVertical className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem onClick={() => handleEditVaultValue(vault)}>
+                            <Key className="h-4 w-4" />
+                            Edit Value
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => handleEditVault(vault)}>
+                            <Edit className="h-4 w-4" />
+                            Edit Properties
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem
+                            onClick={() => handleDeleteVault(vault)}
+                            variant="destructive"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                            Delete Vault
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleViewVaultValue(vault)}
-                      title="View Value"
-                    >
-                      <Eye className="h-4 w-4" />
-                    </Button>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="outline" size="sm">
-                          <MoreVertical className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => handleEditVaultValue(vault)}>
-                          <Key className="h-4 w-4" />
-                          Edit Value
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleEditVault(vault)}>
-                          <Edit className="h-4 w-4" />
-                          Edit Properties
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                          onClick={() => handleDeleteVault(vault)}
-                          variant="destructive"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                          Delete Vault
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
+                </Card>
+              ))}
+            </div>
+
+            {/* Pagination Controls */}
+            {totalCount > 0 && (
+              <div className="mt-6 flex items-center justify-between">
+                <div className="text-sm text-muted-foreground">
+                  Showing {pageIndex * pageSize + 1} to {Math.min((pageIndex + 1) * pageSize, totalCount)} of {totalCount} vaults
                 </div>
-              </Card>
-            ))}
-          </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setPageIndex(pageIndex - 1)}
+                    disabled={pageIndex === 0 || isLoading}
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                    Previous
+                  </Button>
+                  <div className="text-sm text-muted-foreground">
+                    Page {pageIndex + 1} of {Math.ceil(totalCount / pageSize)}
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setPageIndex(pageIndex + 1)}
+                    disabled={pageIndex >= Math.ceil(totalCount / pageSize) - 1 || isLoading}
+                  >
+                    Next
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </main>
     );

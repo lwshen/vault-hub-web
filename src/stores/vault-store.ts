@@ -7,11 +7,16 @@ interface VaultState {
   isLoading: boolean;
   error: string | null;
   isDeleting: boolean;
+  totalCount: number;
+  pageSize: number;
+  pageIndex: number;
 }
 
 interface VaultActions {
-  fetchVaults: () => Promise<void>;
+  fetchVaults: (pageIndex?: number, pageSize?: number) => Promise<void>;
   deleteVault: (uniqueId: string) => Promise<void>;
+  setPageIndex: (pageIndex: number) => void;
+  setPageSize: (pageSize: number) => void;
   clearError: () => void;
   reset: () => void;
 }
@@ -23,17 +28,29 @@ const initialState: VaultState = {
   isLoading: true,
   error: null,
   isDeleting: false,
+  totalCount: 0,
+  pageSize: 10,
+  pageIndex: 0,
 };
 
 export const useVaultStore = create<VaultStore>((set, get) => ({
   ...initialState,
 
-  fetchVaults: async () => {
+  fetchVaults: async (pageIndex?: number, pageSize?: number) => {
     set({ isLoading: true, error: null });
 
+    const currentState = get();
+    const requestPageIndex = pageIndex ?? currentState.pageIndex;
+    const requestPageSize = pageSize ?? currentState.pageSize;
+
     try {
-      const response = await vaultApi.getVaults();
-      set({ vaults: response });
+      const response = await vaultApi.getVaults(requestPageSize, requestPageIndex);
+      set({
+        vaults: response.vaults,
+        totalCount: response.totalCount,
+        pageSize: response.pageSize,
+        pageIndex: response.pageIndex,
+      });
     } catch (err) {
       set({
         error: err instanceof Error ? err.message : 'Failed to fetch vaults',
@@ -49,10 +66,21 @@ export const useVaultStore = create<VaultStore>((set, get) => ({
     try {
       await vaultApi.deleteVault(uniqueId);
       // Refetch vaults after deletion
-      await get().fetchVaults();
+      const currentState = get();
+      await get().fetchVaults(currentState.pageIndex, currentState.pageSize);
     } finally {
       set({ isDeleting: false });
     }
+  },
+
+  setPageIndex: (pageIndex: number) => {
+    set({ pageIndex });
+    get().fetchVaults(pageIndex);
+  },
+
+  setPageSize: (pageSize: number) => {
+    set({ pageSize, pageIndex: 0 });
+    get().fetchVaults(0, pageSize);
   },
 
   clearError: () => set({ error: null }),
