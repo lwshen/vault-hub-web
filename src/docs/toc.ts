@@ -1,7 +1,6 @@
 // Table of Contents configuration for documentation
 import cliGuideContent from './cli-guide.md?raw';
 import serverSetupContent from './server-setup.md?raw';
-import apiReferenceContent from './api-reference.md?raw';
 import securityContent from './security.md?raw';
 
 export interface TOCItem {
@@ -20,11 +19,6 @@ export const documentationTOC: TOCItem[] = [
     id: 'server-setup',
     title: 'Server Setup',
     content: serverSetupContent,
-  },
-  {
-    id: 'api-reference',
-    title: 'API Reference',
-    content: apiReferenceContent,
   },
   {
     id: 'security',
