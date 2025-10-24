@@ -63,6 +63,44 @@ export VAULT_HUB_DEBUG=true
 vault-hub --api-key vhub_your_api_key_here --base-url https://your-server.com list
 ```
 
+## Client-Side Encryption
+
+VaultHub CLI provides **dual-layer encryption** for maximum security. In addition to server-side AES-256-GCM encryption, the CLI enables **client-side encryption by default** when retrieving vault values.
+
+### How It Works
+
+**Default Behavior (Enabled):**
+1. Server encrypts vault values with AES-256-GCM (always active)
+2. When you retrieve a vault, the server applies an additional encryption layer
+3. Encryption key is derived using PBKDF2 from: API key + vault unique ID (as salt)
+4. Your CLI automatically decrypts the value using the same derivation
+5. Each vault gets a unique encryption key - even with the same API key
+
+**Security Benefits:**
+- **Defense in depth**: Two independent encryption layers
+- **Per-vault keys**: Each vault has a unique client-side encryption key
+- **No key exchange**: Keys derived deterministically, nothing transmitted over network
+- **API key protection**: Even if network traffic is intercepted, vault values remain encrypted
+
+### Usage
+
+```bash
+# Client-side encryption is ENABLED by default
+vault-hub get --name production-secrets
+
+# Disable client-side encryption if needed (server-side encryption still active)
+vault-hub get --name production-secrets --no-client-encryption
+```
+
+### When to Disable Client-Side Encryption
+
+You might want to use `--no-client-encryption` when:
+- Debugging API responses to see server-encrypted format
+- Using custom integrations that handle decryption separately
+- Testing server-side encryption independently
+
+**Note:** Server-side AES-256-GCM encryption is always active and cannot be disabled. The `--no-client-encryption` flag only disables the additional client-side encryption layer.
+
 ## Commands
 
 ### List Vaults
@@ -102,6 +140,10 @@ vault-hub get -n production-secrets -o .env -e "docker build -t myapp ."
 # - Vault modification timestamp vs file modification time
 # - Vault content vs existing file content
 # Files are only updated and commands only executed when changes are detected
+
+# Disable client-side encryption if needed (server-side encryption still active)
+vault-hub get --name production-secrets --no-client-encryption
+vault-hub get -n production-secrets --no-client-encryption -o .env
 ```
 
 ### Version Information
@@ -206,6 +248,7 @@ For a complete reference of all CLI environment variables:
 | `VAULT_HUB_API_KEY` | `--api-key` | - | Yes | API key for authentication (starts with `vhub_`) |
 | `VAULT_HUB_BASE_URL` | `--base-url` | `http://localhost:3000` | No | VaultHub server URL |
 | `VAULT_HUB_DEBUG` or `DEBUG` | `--debug` | `false` | No | Enable debug logging |
+| - | `--no-client-encryption` | `false` | No | Disable additional client-side encryption layer (get command only) |
 
 ### Docker-Specific Variables
 
