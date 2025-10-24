@@ -41,7 +41,6 @@ export default function VaultsContent() {
     pageSize,
     pageIndex,
     setPageIndex,
-    setPageSize,
   } = useVaultStore();
 
   const [, navigate] = useLocation();
