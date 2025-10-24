@@ -8,6 +8,7 @@ interface VaultState {
   error: string | null;
   isDeleting: boolean;
   totalCount: number;
+  totalPages: number;
   pageSize: number;
   pageIndex: number;
 }
@@ -29,6 +30,7 @@ const initialState: VaultState = {
   error: null,
   isDeleting: false,
   totalCount: 0,
+  totalPages: 0,
   pageSize: 10,
   pageIndex: 1,
 };
@@ -48,6 +50,7 @@ export const useVaultStore = create<VaultStore>((set, get) => ({
       set({
         vaults: response.vaults,
         totalCount: response.totalCount,
+        totalPages: Math.ceil(response.totalCount / response.pageSize),
         pageSize: response.pageSize,
         pageIndex: response.pageIndex,
       });
