@@ -1,6 +1,7 @@
 // Table of Contents configuration for documentation
 import cliGuideContent from './cli-guide.md?raw';
 import serverSetupContent from './server-setup.md?raw';
+import apiReferenceContent from './api-reference.md?raw';
 import securityContent from './security.md?raw';
 
 export interface TOCItem {
@@ -21,6 +22,11 @@ export const documentationTOC: TOCItem[] = [
     content: serverSetupContent,
   },
   {
+    id: 'api-reference',
+    title: 'API Reference',
+    content: apiReferenceContent,
+  },
+  {
     id: 'security',
     title: 'Security',
     content: securityContent,
@@ -29,7 +35,7 @@ export const documentationTOC: TOCItem[] = [
 
 // Helper functions
 export const getDocumentationItem = (id: string): TOCItem | undefined => {
-  return documentationTOC.find(item => item.id === id);
+  return documentationTOC.find((item) => item.id === id);
 };
 
 export const getDefaultDocumentation = (): TOCItem => {
