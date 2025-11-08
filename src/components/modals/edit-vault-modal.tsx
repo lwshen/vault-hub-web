@@ -74,8 +74,8 @@ export default function EditVaultModal({ open, onOpenChange, vault, onVaultUpdat
     try {
       await vaultApi.updateVault(vault.uniqueId, {
         name: formData.name.trim(),
-        description: formData.description.trim() || undefined,
-        category: formData.category.trim() || undefined,
+        description: formData.description.trim(),
+        category: formData.category.trim(),
       });
 
       onVaultUpdated?.();

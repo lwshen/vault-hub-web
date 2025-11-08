@@ -62,8 +62,8 @@ export default function CreateVaultModal({ open, onOpenChange, onVaultCreated }:
       await vaultApi.createVault({
         name: formData.name.trim(),
         value: formData.value.trim(),
-        description: formData.description.trim() || undefined,
-        category: formData.category.trim() || undefined,
+        description: formData.description.trim(),
+        category: formData.category.trim(),
       });
 
       // Reset form
