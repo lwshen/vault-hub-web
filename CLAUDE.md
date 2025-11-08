@@ -14,7 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Package Management
 
-- Uses `pnpm@10.15.1` as package manager
+- Uses `pnpm` as package manager
 - Run `pnpm install` to install dependencies
 
 ## Architecture Overview

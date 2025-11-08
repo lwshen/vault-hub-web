@@ -22,7 +22,7 @@ VaultHub Web is the frontend interface for VaultHub, a comprehensive solution fo
 Before you begin, ensure you have the following installed:
 
 - **Node.js** 22 or higher
-- **pnpm** 10.15.1 (specified in `package.json`)
+- **pnpm** (specified in `package.json`)
 - **VaultHub Server** - The backend API server must be running (default: `http://localhost:3000`)
   - Repository: https://github.com/lwshen/vault-hub
 
