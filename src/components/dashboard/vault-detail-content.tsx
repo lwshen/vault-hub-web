@@ -19,6 +19,7 @@ import { VaultDetailHeader } from '@/components/vault/vault-detail-header';
 import { VaultMetadata } from '@/components/vault/vault-metadata';
 import { VaultValueEditor } from '@/components/vault/vault-value-editor';
 import DashboardHeader from '@/components/layout/dashboard-header';
+import EditVaultModal from '@/components/modals/edit-vault-modal';
 
 // Helper function to parse URL query parameters
 function getQueryParam(param: string): string | null {
@@ -39,6 +40,7 @@ interface VaultDetailContentProps {
 export default function VaultDetailContent({ vaultId }: VaultDetailContentProps) {
   const [, navigate] = useLocation();
   const [showUnsavedChangesDialog, setShowUnsavedChangesDialog] = useState(false);
+  const [showEditPropertiesModal, setShowEditPropertiesModal] = useState(false);
 
   // Custom hooks for clean separation of concerns
   const vaultData = useVaultData(vaultId);
@@ -68,6 +70,11 @@ export default function VaultDetailContent({ vaultId }: VaultDetailContentProps)
 
   const handleCancelLeave = () => {
     setShowUnsavedChangesDialog(false);
+  };
+
+  const handleVaultPropertiesUpdated = () => {
+    // Refresh vault data to show updated properties
+    vaultData.refetch();
   };
 
   // Sync URL when mode changes for proper browser history
@@ -155,11 +162,12 @@ export default function VaultDetailContent({ vaultId }: VaultDetailContentProps)
         editMode={editMode}
         vaultActions={vaultActions}
         onGoBack={goBack}
+        onEditProperties={() => setShowEditPropertiesModal(true)}
       />
 
       <main className="flex-1 overflow-y-auto p-4 sm:p-6">
         <div className="space-y-6">
-          <VaultMetadata vault={vaultData.vault} isEditMode={editMode.isEditMode} />
+          <VaultMetadata vault={vaultData.vault} />
           <VaultValueEditor
             isEditMode={editMode.isEditMode}
             vaultActions={vaultActions}
@@ -187,6 +195,14 @@ export default function VaultDetailContent({ vaultId }: VaultDetailContentProps)
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Edit Properties Modal */}
+      <EditVaultModal
+        open={showEditPropertiesModal}
+        onOpenChange={setShowEditPropertiesModal}
+        vault={vaultData.vault}
+        onVaultUpdated={handleVaultPropertiesUpdated}
+      />
     </>
   );
 }

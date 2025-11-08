@@ -1,19 +1,18 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { Edit3, Eye } from 'lucide-react';
+import { Eye } from 'lucide-react';
 import type { Vault } from '@lwshen/vault-hub-ts-fetch-client';
 
 interface VaultMetadataProps {
   vault: Vault;
-  isEditMode: boolean;
 }
 
-export function VaultMetadata({ vault, isEditMode }: VaultMetadataProps) {
+export function VaultMetadata({ vault }: VaultMetadataProps) {
   return (
     <Card>
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
-          {isEditMode ? <Edit3 className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+          <Eye className="h-5 w-5" />
           {vault.name}
         </CardTitle>
       </CardHeader>

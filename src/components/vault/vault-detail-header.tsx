@@ -6,6 +6,7 @@ import {
   Edit3,
   Loader2,
   Save,
+  Settings,
   X,
 } from 'lucide-react';
 import type { Vault } from '@lwshen/vault-hub-ts-fetch-client';
@@ -17,6 +18,7 @@ interface VaultDetailHeaderProps {
   editMode: UseEditModeReturn;
   vaultActions: UseVaultActionsReturn;
   onGoBack: () => void;
+  onEditProperties?: () => void;
 }
 
 export function VaultDetailHeader({
@@ -24,6 +26,7 @@ export function VaultDetailHeader({
   editMode,
   vaultActions,
   onGoBack,
+  onEditProperties,
 }: VaultDetailHeaderProps) {
   const { isEditMode, enterEditMode, exitEditMode } = editMode;
   const { handleSave, handleCopy, resetChanges, isSaving } = vaultActions;
@@ -59,6 +62,12 @@ export function VaultDetailHeader({
                   <Copy className="h-4 w-4 mr-0 sm:mr-2" />
                   <span className="hidden sm:inline">Copy</span>
                 </Button>
+                {onEditProperties && (
+                  <Button variant="outline" size="sm" onClick={onEditProperties}>
+                    <Settings className="h-4 w-4 mr-0 sm:mr-2" />
+                    <span className="hidden sm:inline">Edit Properties</span>
+                  </Button>
+                )}
                 <Button variant="default" size="sm" onClick={enterEditMode}>
                   <Edit3 className="h-4 w-4 mr-0 sm:mr-2" />
                   <span className="hidden sm:inline">Edit</span>
@@ -112,6 +121,17 @@ export function VaultDetailHeader({
                 <Copy className="h-4 w-4 mr-2" />
                 Copy Value
               </Button>
+              {onEditProperties && (
+                <Button
+                  variant="outline"
+                  size="lg"
+                  onClick={onEditProperties}
+                  className="flex-1"
+                >
+                  <Settings className="h-4 w-4 mr-2" />
+                  Properties
+                </Button>
+              )}
               <Button
                 variant="default"
                 size="lg"

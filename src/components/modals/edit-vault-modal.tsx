@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -22,19 +22,24 @@ interface FormData {
 
 export default function EditVaultModal({ open, onOpenChange, vault, onVaultUpdated }: EditVaultModalProps) {
   const [formData, setFormData] = useState<FormData>({
-    name: vault?.name ?? '',
-    description: vault?.description ?? '',
-    category: vault?.category ?? '',
+    name: '',
+    description: '',
+    category: '',
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Use vault data directly when available, otherwise use form state
-  const displayData = vault && open ? {
-    name: vault.name || '',
-    description: vault.description || '',
-    category: vault.category || '',
-  } : formData;
+  // Sync form data when vault changes or modal opens
+  useEffect(() => {
+    if (open && vault) {
+      setFormData({
+        name: vault.name || '',
+        description: vault.description || '',
+        category: vault.category || '',
+      });
+      setError(null);
+    }
+  }, [open, vault]);
 
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -57,7 +62,7 @@ export default function EditVaultModal({ open, onOpenChange, vault, onVaultUpdat
 
     if (!vault) return;
 
-    const validationError = validateForm(displayData);
+    const validationError = validateForm(formData);
     if (validationError) {
       setError(validationError);
       return;
@@ -68,9 +73,9 @@ export default function EditVaultModal({ open, onOpenChange, vault, onVaultUpdat
 
     try {
       await vaultApi.updateVault(vault.uniqueId, {
-        name: displayData.name.trim(),
-        description: displayData.description.trim() || undefined,
-        category: displayData.category.trim() || undefined,
+        name: formData.name.trim(),
+        description: formData.description.trim() || undefined,
+        category: formData.category.trim() || undefined,
       });
 
       onVaultUpdated?.();
@@ -108,7 +113,7 @@ export default function EditVaultModal({ open, onOpenChange, vault, onVaultUpdat
               <Input
                 id="name"
                 placeholder="e.g., Production API Keys"
-                value={displayData.name}
+                value={formData.name}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('name', e.target.value)}
                 disabled={isLoading}
                 required
@@ -120,7 +125,7 @@ export default function EditVaultModal({ open, onOpenChange, vault, onVaultUpdat
               <Input
                 id="category"
                 placeholder="e.g., API Keys, Database, Certificates"
-                value={displayData.category}
+                value={formData.category}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('category', e.target.value)}
                 disabled={isLoading}
               />
@@ -131,7 +136,7 @@ export default function EditVaultModal({ open, onOpenChange, vault, onVaultUpdat
               <textarea
                 id="description"
                 placeholder="Optional description for this vault"
-                value={displayData.description}
+                value={formData.description}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleInputChange('description', e.target.value)}
                 disabled={isLoading}
                 rows={2}
