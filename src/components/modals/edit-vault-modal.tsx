@@ -39,7 +39,7 @@ export default function EditVaultModal({ open, onOpenChange, vault, onVaultUpdat
       });
       setError(null);
     }
-  }, [open, vault]);
+  }, [open, vault?.uniqueId, vault?.name, vault?.description, vault?.category]);
 
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
