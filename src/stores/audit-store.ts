@@ -12,6 +12,8 @@ interface AuditLogState {
   totalCount: number;
   totalPages: number;
   pageSize: number;
+  vaultFilter: string | null;
+  sourceFilter: 'all' | 'web' | 'cli';
 }
 
 interface AuditLogActions {
@@ -19,6 +21,9 @@ interface AuditLogActions {
   fetchAuditLogs: (page: number) => Promise<void>;
   setPageSize: (pageSize: number) => void;
   setCurrentPage: (page: number) => void;
+  setVaultFilter: (vaultUniqueId: string | null) => void;
+  setSourceFilter: (source: 'all' | 'web' | 'cli') => void;
+  clearFilters: () => void;
   clearError: () => void;
   reset: () => void;
 }
@@ -35,6 +40,8 @@ const initialState: AuditLogState = {
   totalCount: 0,
   totalPages: 0,
   pageSize: 20,
+  vaultFilter: null,
+  sourceFilter: 'all',
 };
 
 export const useAuditLogStore = create<AuditLogStore>((set, get) => ({
@@ -53,15 +60,27 @@ export const useAuditLogStore = create<AuditLogStore>((set, get) => ({
   },
 
   fetchAuditLogs: async (page: number) => {
-    const { pageSize } = get();
+    const { pageSize, vaultFilter, sourceFilter } = get();
     set({ isLoading: true, error: null });
 
     try {
-      const response = await auditApi.getAuditLogs(pageSize, page);
-      const newLogs = response.auditLogs || [];
+      // Pass vaultFilter to API if it's set
+      const response = await auditApi.getAuditLogs(
+        pageSize,
+        page,
+        undefined, // startDate
+        undefined, // endDate
+        vaultFilter || undefined,
+      );
+      let logs = response.auditLogs || [];
+
+      // Apply client-side source filtering
+      if (sourceFilter !== 'all') {
+        logs = logs.filter((log) => log.source === sourceFilter);
+      }
 
       set({
-        auditLogs: newLogs,
+        auditLogs: logs,
         totalCount: response.totalCount || 0,
         totalPages: Math.ceil((response.totalCount || 0) / pageSize),
         currentPage: page,
@@ -86,6 +105,21 @@ export const useAuditLogStore = create<AuditLogStore>((set, get) => ({
     if (page >= 1 && page <= totalPages) {
       get().fetchAuditLogs(page);
     }
+  },
+
+  setVaultFilter: (vaultUniqueId: string | null) => {
+    set({ vaultFilter: vaultUniqueId, currentPage: 1 });
+    get().fetchAuditLogs(1);
+  },
+
+  setSourceFilter: (source: 'all' | 'web' | 'cli') => {
+    set({ sourceFilter: source, currentPage: 1 });
+    get().fetchAuditLogs(1);
+  },
+
+  clearFilters: () => {
+    set({ vaultFilter: null, sourceFilter: 'all', currentPage: 1 });
+    get().fetchAuditLogs(1);
   },
 
   clearError: () => set({ error: null }),
