@@ -1,12 +1,14 @@
-import { auditApi } from '@/apis/api';
-import type { AuditLog, AuditMetricsResponse } from '@lwshen/vault-hub-ts-fetch-client';
+import { auditApi, vaultApi } from '@/apis/api';
+import type { AuditLog, AuditMetricsResponse, VaultFilterOption } from '@lwshen/vault-hub-ts-fetch-client';
 import { create } from 'zustand';
 
 interface AuditLogState {
   auditLogs: AuditLog[];
   metrics: AuditMetricsResponse | null;
+  vaultFilterOptions: VaultFilterOption[];
   isLoading: boolean;
   metricsLoading: boolean;
+  vaultFilterOptionsLoading: boolean;
   error: string | null;
   currentPage: number;
   totalCount: number;
@@ -19,6 +21,7 @@ interface AuditLogState {
 interface AuditLogActions {
   fetchMetrics: () => Promise<void>;
   fetchAuditLogs: (page: number) => Promise<void>;
+  fetchVaultFilterOptions: () => Promise<void>;
   setPageSize: (pageSize: number) => void;
   setCurrentPage: (page: number) => void;
   setVaultFilter: (vaultUniqueId: string | null) => void;
@@ -33,8 +36,10 @@ type AuditLogStore = AuditLogState & AuditLogActions;
 const initialState: AuditLogState = {
   auditLogs: [],
   metrics: null,
+  vaultFilterOptions: [],
   isLoading: true,
   metricsLoading: true,
+  vaultFilterOptionsLoading: false,
   error: null,
   currentPage: 1,
   totalCount: 0,
@@ -56,6 +61,18 @@ export const useAuditLogStore = create<AuditLogStore>((set, get) => ({
       console.error('Failed to fetch metrics:', err);
     } finally {
       set({ metricsLoading: false });
+    }
+  },
+
+  fetchVaultFilterOptions: async () => {
+    set({ vaultFilterOptionsLoading: true });
+    try {
+      const response = await vaultApi.getVaultFilterOptions();
+      set({ vaultFilterOptions: response.vaults || [] });
+    } catch (err) {
+      console.error('Failed to fetch vault filter options:', err);
+    } finally {
+      set({ vaultFilterOptionsLoading: false });
     }
   },
 

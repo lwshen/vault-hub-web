@@ -31,7 +31,6 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { useAuditLogStore } from '@/stores/audit-store';
-import { useVaultStore } from '@/stores/vault-store';
 import { formatTimestamp, getActionTitle, getIconForAction } from '@/utils/audit-log';
 import {
   Activity,
@@ -48,6 +47,7 @@ export default function AuditLogContent() {
   const {
     auditLogs,
     metrics,
+    vaultFilterOptions,
     isLoading,
     metricsLoading,
     error,
@@ -59,6 +59,7 @@ export default function AuditLogContent() {
     sourceFilter,
     fetchMetrics,
     fetchAuditLogs,
+    fetchVaultFilterOptions,
     setPageSize,
     setCurrentPage,
     setVaultFilter,
@@ -66,22 +67,20 @@ export default function AuditLogContent() {
     clearFilters,
   } = useAuditLogStore();
 
-  const { vaults, fetchVaults } = useVaultStore();
-
   useEffect(() => {
     fetchMetrics();
     fetchAuditLogs(1);
-    fetchVaults(0, 1000); // Fetch all vaults for filter
-  }, [fetchMetrics, fetchAuditLogs, fetchVaults]);
+    fetchVaultFilterOptions(); // Fetch vault filter options
+  }, [fetchMetrics, fetchAuditLogs, fetchVaultFilterOptions]);
 
   // Prepare vault options for combobox
   const vaultOptions = useMemo(() => {
-    const options = vaults.map((vault) => ({
+    const options = vaultFilterOptions.map((vault) => ({
       value: vault.uniqueId,
       label: vault.name,
     }));
     return [{ value: '', label: 'All Vaults' }, ...options];
-  }, [vaults]);
+  }, [vaultFilterOptions]);
 
   // Check if any filters are active
   const hasActiveFilters = vaultFilter !== null || sourceFilter !== 'all';
