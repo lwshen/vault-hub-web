@@ -64,23 +64,20 @@ export const useAuditLogStore = create<AuditLogStore>((set, get) => ({
     set({ isLoading: true, error: null });
 
     try {
-      // Pass vaultFilter to API if it's set
+      // Convert 'all' to undefined for API (API doesn't accept 'all')
+      const sourceParam = sourceFilter !== 'all' ? sourceFilter : undefined;
+
       const response = await auditApi.getAuditLogs(
         pageSize,
         page,
         undefined, // startDate
         undefined, // endDate
         vaultFilter || undefined,
+        sourceParam, // Pass source parameter to API for server-side filtering
       );
-      let logs = response.auditLogs || [];
-
-      // Apply client-side source filtering
-      if (sourceFilter !== 'all') {
-        logs = logs.filter((log) => log.source === sourceFilter);
-      }
 
       set({
-        auditLogs: logs,
+        auditLogs: response.auditLogs || [],
         totalCount: response.totalCount || 0,
         totalPages: Math.ceil((response.totalCount || 0) / pageSize),
         currentPage: page,

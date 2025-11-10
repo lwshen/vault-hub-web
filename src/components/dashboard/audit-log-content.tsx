@@ -207,7 +207,7 @@ export default function AuditLogContent() {
                     placeholder="All Vaults"
                     searchPlaceholder="Search vaults..."
                     emptyText="No vault found."
-                    className="w-full sm:w-[200px]"
+                    className="w-full sm:w-[200px] !font-normal"
                   />
                   <Select value={sourceFilter} onValueChange={setSourceFilter}>
                     <SelectTrigger className="w-full sm:w-[160px]">
