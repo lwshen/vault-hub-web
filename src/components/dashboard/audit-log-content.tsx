@@ -1,6 +1,7 @@
 import DashboardHeader from '@/components/layout/dashboard-header';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Combobox } from '@/components/ui/combobox';
 import {
   Pagination,
   PaginationContent,
@@ -34,16 +35,19 @@ import { formatTimestamp, getActionTitle, getIconForAction } from '@/utils/audit
 import {
   Activity,
   AlertCircle,
+  Filter,
   Key,
   Loader2,
   Lock,
+  X,
 } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 export default function AuditLogContent() {
   const {
     auditLogs,
     metrics,
+    vaultFilterOptions,
     isLoading,
     metricsLoading,
     error,
@@ -51,16 +55,35 @@ export default function AuditLogContent() {
     totalCount,
     totalPages,
     pageSize,
+    vaultFilter,
+    sourceFilter,
     fetchMetrics,
     fetchAuditLogs,
+    fetchVaultFilterOptions,
     setPageSize,
     setCurrentPage,
+    setVaultFilter,
+    setSourceFilter,
+    clearFilters,
   } = useAuditLogStore();
 
   useEffect(() => {
     fetchMetrics();
     fetchAuditLogs(1);
-  }, [fetchMetrics, fetchAuditLogs]);
+    fetchVaultFilterOptions(); // Fetch vault filter options
+  }, [fetchMetrics, fetchAuditLogs, fetchVaultFilterOptions]);
+
+  // Prepare vault options for combobox
+  const vaultOptions = useMemo(() => {
+    const options = vaultFilterOptions.map((vault) => ({
+      value: vault.uniqueId,
+      label: vault.name,
+    }));
+    return [{ value: '', label: 'All Vaults' }, ...options];
+  }, [vaultFilterOptions]);
+
+  // Check if any filters are active
+  const hasActiveFilters = vaultFilter !== null || sourceFilter !== 'all';
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -167,6 +190,46 @@ export default function AuditLogContent() {
               {/* Header with title */}
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-lg font-semibold">Audit Logs</h3>
+              </div>
+
+              {/* Filters */}
+              <div className="flex flex-col lg:flex-row gap-3 items-start lg:items-center justify-between mb-4 pb-4 border-b">
+                <div className="flex items-center gap-2">
+                  <Filter className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm font-medium">Filters</span>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+                  <Combobox
+                    options={vaultOptions}
+                    value={vaultFilter || ''}
+                    onValueChange={(value) => setVaultFilter(value || null)}
+                    placeholder="All Vaults"
+                    searchPlaceholder="Search vaults..."
+                    emptyText="No vault found."
+                    className="w-full sm:w-[200px] !font-normal"
+                  />
+                  <Select value={sourceFilter} onValueChange={setSourceFilter}>
+                    <SelectTrigger className="w-full sm:w-[160px]">
+                      <SelectValue placeholder="All Sources" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Sources</SelectItem>
+                      <SelectItem value="web">Web UI</SelectItem>
+                      <SelectItem value="cli">CLI/API</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {hasActiveFilters && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={clearFilters}
+                      className="w-full sm:w-auto"
+                    >
+                      <X className="h-4 w-4 mr-2" />
+                      Clear Filters
+                    </Button>
+                  )}
+                </div>
               </div>
 
               {/* Controls - responsive layout */}
