@@ -24,8 +24,7 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "dbaeumer.vscode-eslint",
-        "vue.volar"
+        "dbaeumer.vscode-eslint"
       ]
     }
   }
