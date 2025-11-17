@@ -123,14 +123,14 @@ export default function Header() {
                   <DropdownMenuSeparator className="bg-border" />
                   <DropdownMenuItem
                     className="cursor-pointer focus:bg-accent"
-                    onSelect={() => navigate(PATH.SETTINGS)}
+                    onClick={() => navigate(PATH.SETTINGS)}
                   >
                     <Settings size={16} className="mr-2" />
                     <span>Settings</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="cursor-pointer focus:bg-accent"
-                    onSelect={logout}
+                    onClick={logout}
                   >
                     <LogOut size={16} className="mr-2" />
                     <span>Log out</span>
