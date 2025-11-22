@@ -26,6 +26,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { useVaultStore } from '@/stores/vault-store';
 import type { VaultLite } from '@lwshen/vault-hub-ts-fetch-client';
 import {
@@ -217,29 +222,41 @@ export default function VaultsContent() {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleViewVaultValue(vault)}
-                        title="View Value"
-                      >
-                        <Eye className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant={vault.favourite ? 'secondary' : 'outline'}
-                        size="sm"
-                        onClick={() => handleToggleFavourite(vault)}
-                        title={vault.favourite ? 'Remove from favourites' : 'Mark as favourite'}
-                        disabled={favouriteUpdatingId === vault.uniqueId}
-                      >
-                        {favouriteUpdatingId === vault.uniqueId ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : vault.favourite ? (
-                          <Star className="h-4 w-4 text-amber-500" />
-                        ) : (
-                          <StarOff className="h-4 w-4" />
-                        )}
-                      </Button>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleViewVaultValue(vault)}
+                            title="View Value"
+                          >
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>View value</TooltipContent>
+                      </Tooltip>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant={vault.favourite ? 'secondary' : 'outline'}
+                            size="sm"
+                            onClick={() => handleToggleFavourite(vault)}
+                            title={vault.favourite ? 'Remove from favourites' : 'Mark as favourite'}
+                            disabled={favouriteUpdatingId === vault.uniqueId}
+                          >
+                            {favouriteUpdatingId === vault.uniqueId ? (
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : vault.favourite ? (
+                              <Star className="h-4 w-4 text-amber-500" />
+                            ) : (
+                              <StarOff className="h-4 w-4" />
+                            )}
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          {vault.favourite ? 'Remove from favourites' : 'Mark as favourite'}
+                        </TooltipContent>
+                      </Tooltip>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="outline" size="sm">
