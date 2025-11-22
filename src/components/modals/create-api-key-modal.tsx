@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { apiKeyApi } from '@/apis/api';
 import { Loader2, X, Copy } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface CreateApiKeyModalProps {
   open: boolean;
@@ -64,8 +65,9 @@ export default function CreateApiKeyModal({ open, onOpenChange, onApiKeyCreated 
     if (generatedKey) {
       try {
         await navigator.clipboard.writeText(generatedKey);
+        toast.success('API key copied to clipboard');
       } catch {
-        // ignore errors
+        toast.error('Failed to copy API key');
       }
     }
   };
