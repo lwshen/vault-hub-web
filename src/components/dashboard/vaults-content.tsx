@@ -1,4 +1,5 @@
 import DashboardHeader from '@/components/layout/dashboard-header';
+import { vaultApi } from '@/apis/api';
 import CreateVaultModal from '@/components/modals/create-vault-modal';
 import EditVaultModal from '@/components/modals/edit-vault-modal';
 import { Button } from '@/components/ui/button';
@@ -34,6 +35,8 @@ import {
   Key,
   Loader2,
   Lock,
+  Star,
+  StarOff,
   MoreVertical,
   Plus,
   Trash2,
@@ -64,6 +67,7 @@ export default function VaultsContent() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [selectedVault, setSelectedVault] = useState<VaultLite | null>(null);
+  const [favouriteUpdatingId, setFavouriteUpdatingId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchVaults();
@@ -120,6 +124,23 @@ export default function VaultsContent() {
     setPageSize(size);
   };
 
+  const handleToggleFavourite = async (vault: VaultLite) => {
+    setFavouriteUpdatingId(vault.uniqueId);
+    try {
+      await vaultApi.updateVault(vault.uniqueId, { favourite: !vault.favourite });
+      toast.success(
+        `Vault "${vault.name}" ${vault.favourite ? 'removed from favourites' : 'added to favourites'}`,
+      );
+      fetchVaults();
+    } catch (err) {
+      console.error('Failed to update favourite status:', err);
+      const errorMessage = err instanceof Error ? err.message : 'Failed to update favourite status';
+      toast.error(errorMessage);
+    } finally {
+      setFavouriteUpdatingId(null);
+    }
+  };
+
   const renderContent = () => {
     if (error) {
       return (
@@ -173,7 +194,15 @@ export default function VaultsContent() {
                     <div className="flex items-center gap-4">
                       <Lock className="h-5 w-5 text-blue-500" />
                       <div>
-                        <h3 className="text-lg font-semibold">{vault.name}</h3>
+                        <div className="flex items-center gap-2">
+                          <h3 className="text-lg font-semibold">{vault.name}</h3>
+                          {vault.favourite && (
+                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-200">
+                              <Star className="h-3.5 w-3.5 mr-1" />
+                              Favourite
+                            </span>
+                          )}
+                        </div>
                         <div className="flex items-center gap-4 text-sm text-muted-foreground">
                           {vault.category && (
                             <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300">
@@ -195,6 +224,21 @@ export default function VaultsContent() {
                         title="View Value"
                       >
                         <Eye className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant={vault.favourite ? 'secondary' : 'outline'}
+                        size="sm"
+                        onClick={() => handleToggleFavourite(vault)}
+                        title={vault.favourite ? 'Remove from favourites' : 'Mark as favourite'}
+                        disabled={favouriteUpdatingId === vault.uniqueId}
+                      >
+                        {favouriteUpdatingId === vault.uniqueId ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : vault.favourite ? (
+                          <Star className="h-4 w-4 text-amber-500" />
+                        ) : (
+                          <StarOff className="h-4 w-4" />
+                        )}
                       </Button>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>

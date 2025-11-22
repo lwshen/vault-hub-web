@@ -9,6 +9,7 @@ import {
   Key,
   Loader2,
   Lock,
+  Star,
   Users,
   Vault,
 } from 'lucide-react';
@@ -178,7 +179,15 @@ export default function DashboardContent() {
                     <div className="flex items-center gap-3">
                       <Lock className="h-4 w-4 text-blue-500" />
                       <div>
-                        <p className="font-medium">{vault.name}</p>
+                        <div className="flex items-center gap-2">
+                          <p className="font-medium">{vault.name}</p>
+                          {vault.favourite && (
+                            <span className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-medium bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-200">
+                              <Star className="h-3 w-3 mr-1" />
+                              Favourite
+                            </span>
+                          )}
+                        </div>
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                           {vault.category && (
                             <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300">

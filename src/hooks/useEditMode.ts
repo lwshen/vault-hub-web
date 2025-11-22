@@ -11,20 +11,16 @@ export interface UseEditModeReturn {
 }
 
 export function useEditMode(initialMode: ViewMode = 'view'): UseEditModeReturn {
-  const [mode, setModeState] = useState<ViewMode>(initialMode);
+  const [mode, setMode] = useState<ViewMode>(initialMode);
 
   const isEditMode = mode === 'edit';
 
   const enterEditMode = useCallback(() => {
-    setModeState('edit');
+    setMode('edit');
   }, []);
 
   const exitEditMode = useCallback(() => {
-    setModeState('view');
-  }, []);
-
-  const setMode = useCallback((newMode: ViewMode) => {
-    setModeState(newMode);
+    setMode('view');
   }, []);
 
   return {

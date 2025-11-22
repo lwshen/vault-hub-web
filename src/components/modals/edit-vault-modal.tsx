@@ -18,6 +18,7 @@ interface FormData {
   name: string;
   description: string;
   category: string;
+  favourite: boolean;
 }
 
 export default function EditVaultModal({ open, onOpenChange, vault, onVaultUpdated }: EditVaultModalProps) {
@@ -25,6 +26,7 @@ export default function EditVaultModal({ open, onOpenChange, vault, onVaultUpdat
     name: '',
     description: '',
     category: '',
+    favourite: false,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -32,16 +34,19 @@ export default function EditVaultModal({ open, onOpenChange, vault, onVaultUpdat
   // Sync form data when vault changes or modal opens
   useEffect(() => {
     if (open && vault) {
+      // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
       setFormData({
         name: vault.name || '',
         description: vault.description || '',
         category: vault.category || '',
+        favourite: Boolean(vault.favourite),
       });
+      // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
       setError(null);
     }
-  }, [open, vault?.uniqueId, vault?.name, vault?.description, vault?.category]);
+  }, [open, vault]);
 
-  const handleInputChange = (field: keyof FormData, value: string) => {
+  const handleInputChange = <K extends keyof FormData>(field: K, value: FormData[K]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     if (error) setError(null);
   };
@@ -76,6 +81,7 @@ export default function EditVaultModal({ open, onOpenChange, vault, onVaultUpdat
         name: formData.name.trim(),
         description: formData.description.trim(),
         category: formData.category.trim(),
+        favourite: formData.favourite,
       });
 
       onVaultUpdated?.();
@@ -141,6 +147,24 @@ export default function EditVaultModal({ open, onOpenChange, vault, onVaultUpdat
                 disabled={isLoading}
                 rows={2}
                 className="flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+              />
+            </div>
+            <div className="flex items-center justify-between rounded-md border border-input px-3 py-2">
+              <div>
+                <Label htmlFor="favourite" className="text-sm font-medium">
+                  Mark as favourite
+                </Label>
+                <p className="text-xs text-muted-foreground">
+                  Highlight this vault for quick access.
+                </p>
+              </div>
+              <input
+                id="favourite"
+                type="checkbox"
+                checked={formData.favourite}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('favourite', e.target.checked)}
+                disabled={isLoading}
+                className="h-4 w-4 accent-amber-500"
               />
             </div>
 
