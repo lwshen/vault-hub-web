@@ -44,7 +44,7 @@ export function LoginForm({
   const [step, setStep] = useState<Step>(STEP.EMAIL);
   const [magicLinkFeedback, setMagicLinkFeedback] = useState<MagicLinkFeedback | null>(null);
   const [magicLinkLoading, setMagicLinkLoading] = useState(false);
-  const { oidcEnabled, emailEnabled, configLoading } = useAppConfig();
+  const { oidcEnabled, emailEnabled, demoEnabled, configLoading } = useAppConfig();
   const magicLinkMessage = magicLinkFeedback?.message;
   const magicLinkStatus = magicLinkFeedback?.status;
   const showMagicLinkOption = !configLoading && emailEnabled;
@@ -110,6 +110,18 @@ export function LoginForm({
 
   const handleOidcLogin = () => {
     loginWithOidc();
+  };
+
+  const handleDemoLogin = async () => {
+    setError(null);
+    setLoading(true);
+    try {
+      await login('mock@demo.com', 'Test1234!');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Demo login failed');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const navigateToForgotPassword = () => {
@@ -306,7 +318,7 @@ export function LoginForm({
               </form>
             )}
 
-            {!configLoading && oidcEnabled && (
+            {!configLoading && (oidcEnabled || demoEnabled) && (
               <>
                 <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                   <span className="bg-card text-muted-foreground relative z-10 px-2">
@@ -315,10 +327,17 @@ export function LoginForm({
                 </div>
 
                 <div className="flex flex-col gap-4">
-                  <Button variant="outline" className="w-full" onClick={handleOidcLogin} aria-label="Login with OpenID Connect">
-                    <FaOpenid />
-                    Login with OIDC
-                  </Button>
+                  {oidcEnabled && (
+                    <Button variant="outline" className="w-full" onClick={handleOidcLogin} aria-label="Login with OpenID Connect">
+                      <FaOpenid />
+                      Login with OIDC
+                    </Button>
+                  )}
+                  {demoEnabled && (
+                    <Button variant="outline" className="w-full" onClick={handleDemoLogin} disabled={loading} aria-label="Login with demo account">
+                      Demo Mode
+                    </Button>
+                  )}
                 </div>
               </>
             )}

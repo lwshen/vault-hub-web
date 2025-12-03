@@ -13,7 +13,6 @@ import VaultDetail from '@/pages/dashboard/vault-detail';
 import Vaults from '@/pages/dashboard/vaults';
 import Documentation from '@/pages/documentation';
 import Features from '@/pages/features';
-import Mock from '@/pages/mock';
 import { Route, Switch } from 'wouter';
 
 export const AppRoutes = () => (
@@ -26,9 +25,6 @@ export const AppRoutes = () => (
     </Route>
     <Route path={PATH.DOCS}>
       <Documentation />
-    </Route>
-    <Route path={PATH.MOCK}>
-      <Mock />
     </Route>
     <Route path="/users/:name">{(params) => <>Hello, {params.name}!</>}</Route>
     <Route path={PATH.LOGIN}>

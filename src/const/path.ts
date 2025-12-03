@@ -13,6 +13,5 @@ export const PATH = {
   FEATURES: '/features',
   ABOUT: '/about',
   DOCS: '/docs',
-  MOCK: '/mock',
   USERS: '/users/:name',
 };
