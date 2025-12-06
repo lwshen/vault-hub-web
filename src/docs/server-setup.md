@@ -45,6 +45,9 @@ VaultHub can be configured using environment variables. Here are the essential s
 | `APP_PORT` | 3000 | Server port |
 | `DATABASE_TYPE` | sqlite | Database type: sqlite, mysql, postgres |
 | `DATABASE_URL` | data.db | Database connection string |
+| `DEMO_ENABLED` | false | Enable demo mode with a pre-created demo user |
+| `EMAIL_ENABLED` | false | Enable email flows (password reset, magic link) |
+| `EMAIL_TYPE` | SMTP | Email provider: `SMTP` or `RESEND` |
 | `OIDC_CLIENT_ID` | - | OIDC client ID (optional) |
 | `OIDC_CLIENT_SECRET` | - | OIDC client secret (optional) |
 | `OIDC_ISSUER` | - | OIDC issuer URL (optional) |
@@ -555,7 +558,7 @@ Magic links provide secure, passwordless authentication via email.
 4. System redirects to dashboard with JWT token
 
 **Requirements:**
-- Email service configured (SMTP or email provider)
+- Email service configured (SMTP or Resend)
 - User must have an existing account
 
 **Rate Limiting:**
@@ -590,24 +593,33 @@ Users can reset their passwords through email verification.
 
 ### Email Configuration
 
-To enable magic link and password reset features, configure your email settings:
+To enable magic link and password reset features, set `EMAIL_ENABLED=true` and choose a provider:
 
 ```bash
-# Email service configuration (example with SMTP)
-export EMAIL_FROM="noreply@yourdomain.com"
+# SMTP (default)
+export EMAIL_ENABLED=true
+export EMAIL_TYPE=SMTP
 export SMTP_HOST="smtp.gmail.com"
 export SMTP_PORT="587"
+export SMTP_MODE="starttls"   # auto|starttls|implicit|plain (auto picks based on port)
 export SMTP_USERNAME="your-email@gmail.com"
 export SMTP_PASSWORD="your-app-password"
-export SMTP_TLS="true"
-
-# Or use email service providers (SendGrid, Mailgun, etc.)
-export EMAIL_PROVIDER="sendgrid"
-export SENDGRID_API_KEY="your-sendgrid-api-key"
-export EMAIL_FROM="noreply@yourdomain.com"
+export SMTP_FROM_ADDRESS="noreply@yourdomain.com"
+export SMTP_FROM_NAME="Vault Hub"
 ```
 
-**Note:** Without email configuration, magic link and password reset features will be disabled, but standard email/password authentication will still work.
+```bash
+# Resend
+export EMAIL_ENABLED=true
+export EMAIL_TYPE=RESEND
+export RESEND_API_KEY="your-resend-api-key"
+export RESEND_FROM_ADDRESS="noreply@yourdomain.com"
+export RESEND_FROM_NAME="Vault Hub"
+```
+
+**Notes:**
+- When email is enabled, all required fields for the chosen provider must be set or the server will exit with validation errors.
+- `SMTP_TLS` is supported for backward compatibility but `SMTP_MODE` is preferred for TLS behavior.
 
 ## OIDC Authentication Setup
 
