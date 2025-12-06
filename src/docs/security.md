@@ -167,6 +167,25 @@ Secure password reset via email verification.
 - **Token invalidation**: Previous tokens invalidated on password change
 - **Email confirmation**: Only sent if account exists (privacy)
 
+**Email Configuration (required for magic links/password reset):**
+```bash
+# SMTP (default)
+export EMAIL_ENABLED=true
+export EMAIL_TYPE=SMTP
+export SMTP_HOST="smtp.gmail.com"
+export SMTP_PORT="587"
+export SMTP_MODE="starttls"   # auto|starttls|implicit|plain
+export SMTP_USERNAME="your-email@gmail.com"
+export SMTP_PASSWORD="your-app-password"
+export SMTP_FROM_ADDRESS="noreply@yourdomain.com"
+
+# Resend
+export EMAIL_ENABLED=true
+export EMAIL_TYPE=RESEND
+export RESEND_API_KEY="your-resend-api-key"
+export RESEND_FROM_ADDRESS="noreply@yourdomain.com"
+```
+
 #### OpenID Connect (OIDC)
 
 Enterprise authentication integration.
