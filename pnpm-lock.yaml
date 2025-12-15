@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@lwshen/vault-hub-ts-fetch-client':
-        specifier: 1.4.18
-        version: 1.4.18
+        specifier: 1.4.19
+        version: 1.4.19
       '@radix-ui/react-alert-dialog':
         specifier: ^1.1.15
         version: 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -516,8 +516,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@lwshen/vault-hub-ts-fetch-client@1.4.18':
-    resolution: {integrity: sha512-4hdTExMto6tDT3acaPs0+5XfnPZLjaKc5kf53CmnbhAhwWtRleuhC0sJ9PFJnwCe3viNT+EVc0pI2aeOd3AR6Q==}
+  '@lwshen/vault-hub-ts-fetch-client@1.4.19':
+    resolution: {integrity: sha512-9wG9h9+ZUqVJCiWJEYcwsLZlDRqF3muYVm2whXkp2eRaKCbupWe7pE8jANFMrN2nMpjRZkg+n6jh+ZGwfX6zFw==}
 
   '@radix-ui/number@1.1.1':
     resolution: {integrity: sha512-MkKCwxlXTgz6CFoJx3pCwn07GKp36+aZyu/u2Ln2VrA5DcdyCZkASEDBTd8x5whTQQL5CiYf4prXKLcgQdv29g==}
@@ -2743,7 +2743,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@lwshen/vault-hub-ts-fetch-client@1.4.18': {}
+  '@lwshen/vault-hub-ts-fetch-client@1.4.19': {}
 
   '@radix-ui/number@1.1.1': {}
 
