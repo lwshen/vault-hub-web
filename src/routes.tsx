@@ -9,6 +9,7 @@ import Signup from '@/pages/auth/signup';
 import ApiKeys from '@/pages/dashboard/api-keys';
 import AuditLog from '@/pages/dashboard/audit-log';
 import Dashboard from '@/pages/dashboard/dashboard';
+import Settings from '@/pages/dashboard/settings';
 import VaultDetail from '@/pages/dashboard/vault-detail';
 import Vaults from '@/pages/dashboard/vaults';
 import Documentation from '@/pages/documentation';
@@ -67,6 +68,11 @@ export const AppRoutes = () => (
     <Route path={PATH.AUDIT_LOG}>
       <ProtectedRoute>
         <AuditLog />
+      </ProtectedRoute>
+    </Route>
+    <Route path={PATH.SETTINGS}>
+      <ProtectedRoute>
+        <Settings />
       </ProtectedRoute>
     </Route>
     <Route>404: No such page!</Route>
