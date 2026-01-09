@@ -151,3 +151,27 @@
   user-select: text;
   -webkit-user-select: text;
 }
+
+/* CodeMirror editor custom styling */
+.cm-editor {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+}
+
+.cm-editor .cm-content {
+  font-size: 0.875rem; /* text-sm */
+  padding: 0.5rem; /* p-2 */
+}
+
+.cm-editor.cm-focused {
+  outline: none;
+}
+
+.cm-editor .cm-gutters {
+  background-color: transparent;
+  border: none;
+}
+
+.cm-editor .cm-activeLineGutter {
+  background-color: transparent;
+}
