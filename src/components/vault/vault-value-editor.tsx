@@ -1,5 +1,6 @@
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { HighlightedCodeBlock } from '@/components/ui/highlighted-code-block';
 import { Label } from '@/components/ui/label';
 import type { UseVaultActionsReturn } from '@/hooks/useVaultData';
 import { AlertCircle, Info } from 'lucide-react';
@@ -98,31 +99,33 @@ export function VaultValueEditor({
                 </span>
               )}
             </div>
-            <textarea
-              id="vault-value"
-              value={currentValue}
-              onChange={(e) => {
-                if (isEditMode) {
+            {isEditMode ? (
+              <textarea
+                id="vault-value"
+                value={currentValue}
+                onChange={(e) => {
                   vaultActions.setEditedValue(e.target.value);
                   if (error) setError(null);
-                }
-              }}
-              placeholder={isEditMode ? 'Enter the secret value to be encrypted and stored' : ''}
-              readOnly={!isEditMode}
-              rows={textareaProps.rows}
-              className={`
-                flex w-full rounded-md border border-input px-3 py-2 text-sm shadow-xs transition-all duration-200 resize-y
-                ${isEditMode
-      ? 'bg-transparent placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring'
-      : 'bg-muted cursor-text select-all'
-    }
-                ${textareaProps.analysis.isLong ? 'font-mono text-xs sm:text-sm' : ''}
-              `}
-              style={{
-                minHeight: textareaProps.minHeight,
-                maxHeight: textareaProps.maxHeight,
-              }}
-            />
+                }}
+                placeholder="Enter the secret value to be encrypted and stored"
+                rows={textareaProps.rows}
+                className={`
+                  flex w-full rounded-md border border-input px-3 py-2 text-sm shadow-xs transition-all duration-200 resize-y
+                  bg-transparent placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+                  ${textareaProps.analysis.isLong ? 'font-mono text-xs sm:text-sm' : ''}
+                `}
+                style={{
+                  minHeight: textareaProps.minHeight,
+                  maxHeight: textareaProps.maxHeight,
+                }}
+              />
+            ) : (
+              <HighlightedCodeBlock
+                code={originalValue}
+                maxHeight={textareaProps.maxHeight}
+                onCopy={vaultActions.handleCopy}
+              />
+            )}
           </div>
 
           {/* Alert Messages */}
