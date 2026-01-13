@@ -1,5 +1,5 @@
 import { ThemeProviderContext, type Theme } from '@/contexts/theme-context';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -17,42 +17,29 @@ export function ThemeProvider({
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
   );
 
-  const [resolvedTheme, setResolvedTheme] = useState<'dark' | 'light'>(() => {
-    const storedTheme = (localStorage.getItem(storageKey) as Theme) || defaultTheme;
-    if (storedTheme === 'system') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    return storedTheme;
-  });
+  const getSystemTheme = () =>
+    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  const systemTheme = useSyncExternalStore(
+    (callback) => {
+      if (theme !== 'system') return () => {};
+
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      const handler = () => callback();
+      mediaQuery.addEventListener('change', handler);
+      return () => mediaQuery.removeEventListener('change', handler);
+    },
+    getSystemTheme,
+    getSystemTheme,
+  );
+
+  const resolvedTheme = theme === 'system' ? systemTheme : theme;
 
   useEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove('light', 'dark');
-
-    let computed: 'dark' | 'light';
-    if (theme === 'system') {
-      computed = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    } else {
-      computed = theme;
-    }
-
-    root.classList.add(computed);
-    setResolvedTheme(computed);
-
-    // Listen for system theme changes when in system mode
-    if (theme === 'system') {
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      const handler = (e: MediaQueryListEvent) => {
-        const newTheme = e.matches ? 'dark' : 'light';
-        root.classList.remove('light', 'dark');
-        root.classList.add(newTheme);
-        setResolvedTheme(newTheme);
-      };
-
-      mediaQuery.addEventListener('change', handler);
-      return () => mediaQuery.removeEventListener('change', handler);
-    }
-  }, [theme]);
+    root.classList.add(resolvedTheme);
+  }, [resolvedTheme]);
 
   const value = useMemo(
     () => ({
