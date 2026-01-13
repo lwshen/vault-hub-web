@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CodeEditor } from '@/components/ui/code-editor';
 import { HighlightedCodeBlock } from '@/components/ui/highlighted-code-block';
 import { Label } from '@/components/ui/label';
-import { useLanguageDetection } from '@/hooks/use-language-detection';
 import type { UseVaultActionsReturn } from '@/hooks/useVaultData';
 import { AlertCircle, Info } from 'lucide-react';
 import { useMemo } from 'react';
@@ -81,8 +80,28 @@ export function VaultValueEditor({
   const currentValue = isEditMode ? vaultActions.editedValue : originalValue;
   const textareaProps = useMemo(() => calculateTextareaProps(currentValue, isEditMode), [currentValue, isEditMode]);
 
-  // Detect language for syntax highlighting
-  const { language: detectedLang } = useLanguageDetection(currentValue);
+  // Simple language detection for edit mode
+  const detectedLang = useMemo(() => {
+    const trimmed = currentValue.trim();
+
+    // JSON detection
+    if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+      try {
+        JSON.parse(currentValue);
+        return 'json';
+      } catch {
+        // Not valid JSON
+      }
+    }
+
+    // YAML detection - key: value pattern
+    if (/^[\w-]+:\s*.+$/m.test(trimmed)) return 'yaml';
+
+    // Shebang - shell scripts
+    if (trimmed.startsWith('#!')) return 'bash';
+
+    return 'plaintext';
+  }, [currentValue]);
 
   return (
     <Card>

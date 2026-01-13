@@ -1,5 +1,5 @@
-import { useLanguageDetection } from '@/hooks/use-language-detection';
 import { cn } from '@/lib/utils';
+import { CodeEditor } from '@/components/ui/code-editor';
 import {
   Select,
   SelectContent,
@@ -8,12 +8,11 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Check, Copy } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 interface HighlightedCodeBlockProps {
   code: string;
   language?: string;
-  showLineNumbers?: boolean;
   maxHeight?: string;
   className?: string;
   onCopy?: () => void;
@@ -35,7 +34,6 @@ const LANGUAGE_OPTIONS = [
 export function HighlightedCodeBlock({
   code,
   language,
-  showLineNumbers = false,
   maxHeight = '600px',
   className,
   onCopy,
@@ -45,10 +43,40 @@ export function HighlightedCodeBlock({
     language,
   );
 
-  const { language: detectedLang, highlightedCode } = useLanguageDetection(
-    code,
-    selectedLanguage || language,
-  );
+  // Auto-detect language from content if not provided
+  const detectedLanguage = useMemo(() => {
+    if (selectedLanguage) return selectedLanguage;
+    if (language) return language;
+
+    // Simple heuristic detection
+    const trimmed = code.trim();
+
+    // JSON detection
+    if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+      try {
+        JSON.parse(code);
+        return 'json';
+      } catch {
+        // Not valid JSON, continue
+      }
+    }
+
+    // YAML detection - key: value pattern
+    if (/^[\w-]+:\s*.+$/m.test(trimmed)) return 'yaml';
+
+    // PEM certificate/key
+    if (trimmed.startsWith('-----BEGIN')) return 'plaintext';
+
+    // Shebang - shell scripts
+    if (trimmed.startsWith('#!')) return 'bash';
+
+    // SQL keywords
+    if (/\b(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP)\b/i.test(trimmed)) {
+      return 'sql';
+    }
+
+    return 'plaintext';
+  }, [code, language, selectedLanguage]);
 
   // Reset selected language when code or language prop changes
   useEffect(() => {
@@ -91,7 +119,7 @@ export function HighlightedCodeBlock({
 
           {/* Badge showing actual detected/selected language */}
           <span className="font-mono text-xs text-muted-foreground">
-            ({detectedLang})
+            ({detectedLanguage})
           </span>
         </div>
 
@@ -110,20 +138,15 @@ export function HighlightedCodeBlock({
         </button>
       </div>
 
-      {/* Code block */}
-      <div
-        className="overflow-auto rounded-b-md border bg-muted/30"
-        style={{ maxHeight }}
-      >
-        <pre
-          className={cn('p-4 text-sm', showLineNumbers && 'line-numbers')}
-        >
-          <code
-            className={`hljs language-${detectedLang}`}
-            dangerouslySetInnerHTML={{ __html: highlightedCode }}
-          />
-        </pre>
-      </div>
+      {/* Code editor in read-only mode */}
+      <CodeEditor
+        value={code}
+        onChange={() => {}} // No-op for read-only
+        language={detectedLanguage}
+        readOnly={true}
+        maxHeight={maxHeight}
+        className="rounded-t-none border-t-0"
+      />
     </div>
   );
 }

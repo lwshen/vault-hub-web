@@ -140,18 +140,6 @@
   padding: 0;
 }
 
-/* Highlighted code block customization */
-.hljs {
-  background: transparent !important;
-  padding: 0;
-}
-
-/* Better text selection in code blocks */
-.highlighted-code-block pre {
-  user-select: text;
-  -webkit-user-select: text;
-}
-
 /* CodeMirror editor custom styling */
 .cm-editor {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
