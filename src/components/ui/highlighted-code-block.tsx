@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/select';
 import { Check, Copy } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
+import { toast } from 'sonner';
 
 interface HighlightedCodeBlockProps {
   code: string;
@@ -86,11 +87,19 @@ export function HighlightedCodeBlock({
   const handleCopy = async () => {
     if (onCopy) {
       onCopy();
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     } else {
-      await navigator.clipboard.writeText(code);
+      try {
+        await navigator.clipboard.writeText(code);
+        toast.success('Code copied to clipboard');
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (err) {
+        console.error('Failed to copy to clipboard:', err);
+        toast.error('Failed to copy to clipboard');
+      }
     }
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
