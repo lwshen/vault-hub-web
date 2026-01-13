@@ -1,5 +1,5 @@
 import { ThemeProviderContext, type Theme } from '@/contexts/theme-context';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -17,33 +17,51 @@ export function ThemeProvider({
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
   );
 
-  useEffect(() => {
-    const root = window.document.documentElement;
-
-    root.classList.remove('light', 'dark');
-
-    if (theme === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
-        .matches
-        ? 'dark'
-        : 'light';
-
-      root.classList.add(systemTheme);
-      return;
+  const getSystemTheme = () => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      return 'light';
     }
 
-    root.classList.add(theme);
-  }, [theme]);
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  };
+
+  const getResolvedTheme = () => (theme === 'system' ? getSystemTheme() : theme);
+
+  const systemTheme = useSyncExternalStore(
+    (callback) => {
+      if (theme !== 'system') return () => {};
+
+      if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+        return () => {};
+      }
+
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      const handler = () => callback();
+      mediaQuery.addEventListener('change', handler);
+      return () => mediaQuery.removeEventListener('change', handler);
+    },
+    getResolvedTheme,
+    getResolvedTheme,
+  );
+
+  const resolvedTheme = theme === 'system' ? systemTheme : theme;
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(resolvedTheme);
+  }, [resolvedTheme]);
 
   const value = useMemo(
     () => ({
       theme,
+      resolvedTheme,
       setTheme: (theme: Theme) => {
         localStorage.setItem(storageKey, theme);
         setTheme(theme);
       },
     }),
-    [theme, storageKey],
+    [theme, resolvedTheme, storageKey],
   );
 
   return (

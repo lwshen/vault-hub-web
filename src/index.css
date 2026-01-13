@@ -3,7 +3,8 @@
 @plugin "@tailwindcss/typography";
 
 @layer base {
-  button, [role="button"] {
+  button,
+  [role="button"] {
     cursor: pointer;
   }
 }
@@ -127,14 +128,38 @@
 }
 
 .light {
-  @import 'highlight.js/styles/atom-one-light.css';
+  @import "highlight.js/styles/atom-one-light.css";
 }
 
 .dark {
-  @import 'highlight.js/styles/atom-one-dark.css';
+  @import "highlight.js/styles/atom-one-dark.css";
 }
 
 .prose pre {
   background-color: transparent;
   padding: 0;
+}
+
+/* CodeMirror editor custom styling */
+.cm-editor {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+}
+
+.cm-editor .cm-content {
+  font-size: 0.875rem; /* text-sm */
+  padding: 0.5rem; /* p-2 */
+}
+
+.cm-editor.cm-focused {
+  outline: none;
+}
+
+.cm-editor .cm-gutters {
+  background-color: transparent;
+  border: none;
+}
+
+.cm-editor .cm-activeLineGutter {
+  background-color: transparent;
 }
