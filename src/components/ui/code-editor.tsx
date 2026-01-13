@@ -46,7 +46,7 @@ export function CodeEditor({
   readOnly = false,
   className,
 }: CodeEditorProps) {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   // Get language extensions based on detected/selected language
   const extensions = useMemo(() => {
@@ -55,13 +55,8 @@ export function CodeEditor({
 
   // Get theme extension based on current theme
   const themeExtension = useMemo(() => {
-    // The theme provider adds 'dark' class to documentElement
-    // Handle 'system' theme by checking if dark class is present
-    const isDark = theme === 'dark' ||
-      (theme === 'system' && document.documentElement.classList.contains('dark'));
-
-    return isDark ? oneDark : githubLight;
-  }, [theme]);
+    return resolvedTheme === 'dark' ? oneDark : githubLight;
+  }, [resolvedTheme]);
 
   return (
     <CodeMirror
