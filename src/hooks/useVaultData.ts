@@ -69,7 +69,7 @@ export interface UseVaultActionsReturn {
   setError: (error: string | null) => void;
   hasUnsavedChanges: boolean;
   handleSave: () => Promise<boolean>;
-  handleCopy: () => Promise<void>;
+  handleCopy: () => Promise<boolean>;
   resetChanges: () => void;
 }
 
@@ -117,13 +117,15 @@ export function useVaultActions({
     }
   };
 
-  const handleCopy = async () => {
+  const handleCopy = async (): Promise<boolean> => {
     try {
       await navigator.clipboard.writeText(originalValue);
       toast.success(`Copied value for "${vault?.name}" to clipboard`);
+      return true;
     } catch (err) {
       console.error('Failed to copy to clipboard:', err);
       toast.error('Failed to copy to clipboard');
+      return false;
     }
   };
 

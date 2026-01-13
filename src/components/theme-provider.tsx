@@ -17,20 +17,31 @@ export function ThemeProvider({
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
   );
 
-  const getSystemTheme = () =>
-    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const getSystemTheme = () => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      return 'light';
+    }
+
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  };
+
+  const getResolvedTheme = () => (theme === 'system' ? getSystemTheme() : theme);
 
   const systemTheme = useSyncExternalStore(
     (callback) => {
       if (theme !== 'system') return () => {};
+
+      if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+        return () => {};
+      }
 
       const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
       const handler = () => callback();
       mediaQuery.addEventListener('change', handler);
       return () => mediaQuery.removeEventListener('change', handler);
     },
-    getSystemTheme,
-    getSystemTheme,
+    getResolvedTheme,
+    getResolvedTheme,
   );
 
   const resolvedTheme = theme === 'system' ? systemTheme : theme;
