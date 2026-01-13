@@ -6,8 +6,10 @@ import { xml } from '@codemirror/lang-xml';
 import { yaml } from '@codemirror/lang-yaml';
 import { javascript } from '@codemirror/lang-javascript';
 import type { Extension } from '@codemirror/state';
+import { oneDark } from '@codemirror/theme-one-dark';
+import { githubLight } from '@uiw/codemirror-theme-github';
 import { cn } from '@/lib/utils';
-import { useTheme } from 'next-themes';
+import { useTheme } from '@/hooks/use-theme';
 import { useMemo } from 'react';
 
 interface CodeEditorProps {
@@ -51,12 +53,22 @@ export function CodeEditor({
     return LANGUAGE_EXTENSIONS[language] || [];
   }, [language]);
 
+  // Get theme extension based on current theme
+  const themeExtension = useMemo(() => {
+    // The theme provider adds 'dark' class to documentElement
+    // Handle 'system' theme by checking if dark class is present
+    const isDark = theme === 'dark' ||
+      (theme === 'system' && document.documentElement.classList.contains('dark'));
+
+    return isDark ? oneDark : githubLight;
+  }, [theme]);
+
   return (
     <CodeMirror
       value={value}
       onChange={onChange}
       extensions={extensions}
-      theme={theme === 'dark' ? 'dark' : 'light'}
+      theme={themeExtension}
       placeholder={placeholder}
       readOnly={readOnly}
       basicSetup={{
