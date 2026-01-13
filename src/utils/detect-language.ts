@@ -22,8 +22,16 @@ export const detectLanguage = (code: string) => {
   // Shebang - shell scripts
   if (trimmed.startsWith('#!')) return 'bash';
 
-  // SQL keywords
-  if (/\b(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP)\b/i.test(trimmed)) {
+  // SQL statement patterns
+  if (
+    /\bSELECT\b[\s\S]*\bFROM\b/i.test(trimmed) ||
+    /\bINSERT\b\s+INTO\b/i.test(trimmed) ||
+    /\bUPDATE\b[\s\S]*\bSET\b/i.test(trimmed) ||
+    /\bDELETE\b\s+FROM\b/i.test(trimmed) ||
+    /\bCREATE\b\s+TABLE\b/i.test(trimmed) ||
+    /\bALTER\b\s+TABLE\b/i.test(trimmed) ||
+    /\bDROP\b\s+TABLE\b/i.test(trimmed)
+  ) {
     return 'sql';
   }
 

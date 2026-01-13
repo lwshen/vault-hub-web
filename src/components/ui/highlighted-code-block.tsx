@@ -56,7 +56,7 @@ export function HighlightedCodeBlock({
   // Reset selected language when code or language prop changes
   useEffect(() => {
     setSelectedLanguage(language);
-  }, [code, language]);
+  }, [language]);
 
   const handleCopy = async () => {
     if (onCopy) {

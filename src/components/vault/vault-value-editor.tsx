@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import type { UseVaultActionsReturn } from '@/hooks/useVaultData';
 import { detectLanguage } from '@/utils/detect-language';
 import { AlertCircle, Info } from 'lucide-react';
-import { useMemo } from 'react';
+import { useDeferredValue, useMemo } from 'react';
 
 interface VaultValueEditorProps {
   isEditMode: boolean;
@@ -81,7 +81,8 @@ export function VaultValueEditor({
   const currentValue = isEditMode ? vaultActions.editedValue : originalValue;
   const textareaProps = useMemo(() => calculateTextareaProps(currentValue, isEditMode), [currentValue, isEditMode]);
 
-  const detectedLang = useMemo(() => detectLanguage(currentValue), [currentValue]);
+  const deferredValue = useDeferredValue(currentValue);
+  const detectedLang = useMemo(() => detectLanguage(deferredValue), [deferredValue]);
 
   return (
     <Card>
