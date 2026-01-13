@@ -61,6 +61,7 @@ export function HighlightedCodeBlock({
     const didCopy = await onCopy();
     if (didCopy) {
       setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     }
   };
 
