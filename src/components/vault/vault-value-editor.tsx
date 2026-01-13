@@ -4,6 +4,7 @@ import { CodeEditor } from '@/components/ui/code-editor';
 import { HighlightedCodeBlock } from '@/components/ui/highlighted-code-block';
 import { Label } from '@/components/ui/label';
 import type { UseVaultActionsReturn } from '@/hooks/useVaultData';
+import { detectLanguage } from '@/utils/detect-language';
 import { AlertCircle, Info } from 'lucide-react';
 import { useMemo } from 'react';
 
@@ -80,28 +81,7 @@ export function VaultValueEditor({
   const currentValue = isEditMode ? vaultActions.editedValue : originalValue;
   const textareaProps = useMemo(() => calculateTextareaProps(currentValue, isEditMode), [currentValue, isEditMode]);
 
-  // Simple language detection for edit mode
-  const detectedLang = useMemo(() => {
-    const trimmed = currentValue.trim();
-
-    // JSON detection
-    if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
-      try {
-        JSON.parse(currentValue);
-        return 'json';
-      } catch {
-        // Not valid JSON
-      }
-    }
-
-    // YAML detection - key: value pattern
-    if (/^[\w-]+:\s*.+$/m.test(trimmed)) return 'yaml';
-
-    // Shebang - shell scripts
-    if (trimmed.startsWith('#!')) return 'bash';
-
-    return 'plaintext';
-  }, [currentValue]);
+  const detectedLang = useMemo(() => detectLanguage(currentValue), [currentValue]);
 
   return (
     <Card>

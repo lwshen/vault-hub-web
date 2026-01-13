@@ -7,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { detectLanguage } from '@/utils/detect-language';
 import { Check, Copy } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
@@ -49,34 +50,7 @@ export function HighlightedCodeBlock({
     if (selectedLanguage) return selectedLanguage;
     if (language) return language;
 
-    // Simple heuristic detection
-    const trimmed = code.trim();
-
-    // JSON detection
-    if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
-      try {
-        JSON.parse(code);
-        return 'json';
-      } catch {
-        // Not valid JSON, continue
-      }
-    }
-
-    // YAML detection - key: value pattern
-    if (/^[\w-]+:\s*.+$/m.test(trimmed)) return 'yaml';
-
-    // PEM certificate/key
-    if (trimmed.startsWith('-----BEGIN')) return 'plaintext';
-
-    // Shebang - shell scripts
-    if (trimmed.startsWith('#!')) return 'bash';
-
-    // SQL keywords
-    if (/\b(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP)\b/i.test(trimmed)) {
-      return 'sql';
-    }
-
-    return 'plaintext';
+    return detectLanguage(code);
   }, [code, language, selectedLanguage]);
 
   // Reset selected language when code or language prop changes
