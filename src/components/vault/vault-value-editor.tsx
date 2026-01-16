@@ -5,6 +5,7 @@ import { HighlightedCodeBlock } from '@/components/ui/highlighted-code-block';
 import { Label } from '@/components/ui/label';
 import type { UseVaultActionsReturn } from '@/hooks/useVaultData';
 import { detectLanguage } from '@/utils/detect-language';
+import { calculateTextareaProps } from '@/utils/textarea-utils';
 import { AlertCircle, Info } from 'lucide-react';
 import { useDeferredValue, useMemo } from 'react';
 
@@ -12,62 +13,6 @@ interface VaultValueEditorProps {
   isEditMode: boolean;
   vaultActions: UseVaultActionsReturn;
   originalValue: string;
-}
-
-// Utility functions for content analysis
-function analyzeContent(content: string) {
-  const lines = content.split('\n');
-  const characterCount = content.length;
-  const lineCount = lines.length;
-
-  // Determine if content is "long" based on multiple criteria
-  const isLongByCharacters = characterCount > 500;
-  const isLongByLines = lineCount > 10;
-  const hasVeryLongLines = lines.some(line => line.length > 100);
-
-  const isLong = isLongByCharacters || isLongByLines || hasVeryLongLines;
-
-  return {
-    characterCount,
-    lineCount,
-    isLong,
-    isLongByCharacters,
-    isLongByLines,
-    hasVeryLongLines,
-  };
-}
-
-function calculateTextareaProps(content: string, isEditMode: boolean) {
-  const analysis = analyzeContent(content);
-
-  // Base configuration for short content
-  let rows = 6;
-  let minHeight = isEditMode ? '200px' : '150px';
-  let maxHeight = '600px';
-
-  if (analysis.isLong) {
-    // For long content, provide significantly more space
-    const baseRows = Math.min(Math.max(analysis.lineCount + 2, 12), 25);
-    rows = baseRows;
-
-    // Responsive height based on content and mode
-    if (analysis.isLongByCharacters && analysis.characterCount > 2000) {
-      // Very long content gets even more space
-      minHeight = isEditMode ? '500px' : '400px';
-      maxHeight = '85vh';
-    } else {
-      // Regular long content
-      minHeight = isEditMode ? '400px' : '300px';
-      maxHeight = '75vh';
-    }
-  }
-
-  return {
-    rows,
-    minHeight,
-    maxHeight,
-    analysis,
-  };
 }
 
 export function VaultValueEditor({

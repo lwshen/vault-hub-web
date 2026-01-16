@@ -1,15 +1,8 @@
+import { PaginationControls } from '@/components/dashboard/pagination-controls';
 import DashboardHeader from '@/components/layout/dashboard-header';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Combobox } from '@/components/ui/combobox';
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from '@/components/ui/pagination';
 import {
   Select,
   SelectContent,
@@ -17,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { StatCard } from '@/components/dashboard/stat-card.tsx';
 import {
   Table,
   TableBody,
@@ -117,71 +111,38 @@ export default function AuditLogContent() {
         <div className="space-y-4">
           {/* Audit Stats */}
           <div className="grid gap-4 md:grid-cols-4 mb-6">
-            {/* Row 1 - Primary Metrics */}
-            <Card className="p-4">
-              <div className="flex items-center gap-3">
-                <Activity className="h-8 w-8 text-blue-500" />
-                <div>
-                  <p className="text-2xl font-bold">
-                    {metricsLoading ? (
-                      <Loader2 className="h-6 w-6 animate-spin inline" />
-                    ) : (
-                      metrics?.totalEventsLast30Days?.toLocaleString() || '-'
-                    )}
-                  </p>
-                  <p className="text-sm text-muted-foreground">Total Events</p>
-                  <p className="text-xs text-muted-foreground">Last 30 days</p>
-                </div>
-              </div>
-            </Card>
-            <Card className="p-4">
-              <div className="flex items-center gap-3">
-                <Activity className="h-8 w-8 text-orange-500" />
-                <div>
-                  <p className="text-2xl font-bold">
-                    {metricsLoading ? (
-                      <Loader2 className="h-6 w-6 animate-spin inline" />
-                    ) : (
-                      metrics?.eventsCountLast24Hours?.toLocaleString() || '-'
-                    )}
-                  </p>
-                  <p className="text-sm text-muted-foreground">Last 24 Hours</p>
-                  <p className="text-xs text-muted-foreground">Recent audit logs</p>
-                </div>
-              </div>
-            </Card>
-            <Card className="p-4">
-              <div className="flex items-center gap-3">
-                <Lock className="h-8 w-8 text-green-500" />
-                <div>
-                  <p className="text-2xl font-bold">
-                    {metricsLoading ? (
-                      <Loader2 className="h-6 w-6 animate-spin inline" />
-                    ) : (
-                      metrics?.vaultEventsLast30Days?.toLocaleString() || '-'
-                    )}
-                  </p>
-                  <p className="text-sm text-muted-foreground">Vault Events</p>
-                  <p className="text-xs text-muted-foreground">Last 30 days</p>
-                </div>
-              </div>
-            </Card>
-            <Card className="p-4">
-              <div className="flex items-center gap-3">
-                <Key className="h-8 w-8 text-cyan-500" />
-                <div>
-                  <p className="text-2xl font-bold">
-                    {metricsLoading ? (
-                      <Loader2 className="h-6 w-6 animate-spin inline" />
-                    ) : (
-                      metrics?.apiKeyEventsLast30Days?.toLocaleString() || '-'
-                    )}
-                  </p>
-                  <p className="text-sm text-muted-foreground">API Key Events</p>
-                  <p className="text-xs text-muted-foreground">Last 30 days</p>
-                </div>
-              </div>
-            </Card>
+            <StatCard
+              title="Total Events"
+              value={metrics?.totalEventsLast30Days?.toLocaleString() || '-'}
+              icon={Activity}
+              subtitle="Last 30 days"
+              iconColor="text-blue-500"
+              isLoading={metricsLoading}
+            />
+            <StatCard
+              title="Last 24 Hours"
+              value={metrics?.eventsCountLast24Hours?.toLocaleString() || '-'}
+              icon={Activity}
+              subtitle="Recent audit logs"
+              iconColor="text-orange-500"
+              isLoading={metricsLoading}
+            />
+            <StatCard
+              title="Vault Events"
+              value={metrics?.vaultEventsLast30Days?.toLocaleString() || '-'}
+              icon={Lock}
+              subtitle="Last 30 days"
+              iconColor="text-green-500"
+              isLoading={metricsLoading}
+            />
+            <StatCard
+              title="API Key Events"
+              value={metrics?.apiKeyEventsLast30Days?.toLocaleString() || '-'}
+              icon={Key}
+              subtitle="Last 30 days"
+              iconColor="text-cyan-500"
+              isLoading={metricsLoading}
+            />
           </div>
 
           {/* Audit List */}
@@ -340,7 +301,7 @@ export default function AuditLogContent() {
                                     </p>
                                     {!audit.apiKey.isActive && (
                                       <p className="text-xs text-orange-600 dark:text-orange-400">
-                                        ⚠ This API key was deleted
+                                        This API key was deleted
                                       </p>
                                     )}
                                   </div>
@@ -371,53 +332,15 @@ export default function AuditLogContent() {
                   </TableBody>
                 </Table>
 
-                {/* Pagination */}
-                {totalPages > 1 && (
-                  <div className="mt-6 flex justify-center">
-                    <Pagination>
-                      <PaginationContent>
-                        <PaginationItem>
-                          <PaginationPrevious
-                            onClick={() => handlePageChange(currentPage - 1)}
-                            className={currentPage <= 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
-                          />
-                        </PaginationItem>
-
-                        {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                          let pageNum;
-                          if (totalPages <= 5) {
-                            pageNum = i + 1;
-                          } else if (currentPage <= 3) {
-                            pageNum = i + 1;
-                          } else if (currentPage >= totalPages - 2) {
-                            pageNum = totalPages - 4 + i;
-                          } else {
-                            pageNum = currentPage - 2 + i;
-                          }
-
-                          return (
-                            <PaginationItem key={pageNum}>
-                              <PaginationLink
-                                onClick={() => handlePageChange(pageNum)}
-                                isActive={currentPage === pageNum}
-                                className="cursor-pointer"
-                              >
-                                {pageNum}
-                              </PaginationLink>
-                            </PaginationItem>
-                          );
-                        })}
-
-                        <PaginationItem>
-                          <PaginationNext
-                            onClick={() => handlePageChange(currentPage + 1)}
-                            className={currentPage >= totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
-                          />
-                        </PaginationItem>
-                      </PaginationContent>
-                    </Pagination>
-                  </div>
-                )}
+                <PaginationControls
+                  currentPage={currentPage}
+                  pageSize={pageSize}
+                  totalCount={totalCount}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                  onPageSizeChange={handlePageSizeChange}
+                  itemLabel="events"
+                />
               </>
             )}
           </Card>

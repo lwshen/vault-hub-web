@@ -1,7 +1,9 @@
 import { auditApi, statusApi } from '@/apis/api';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { StatCard } from '@/components/dashboard/stat-card.tsx';
 import { useVaultStore } from '@/stores/vault-store';
+import { getStatusColor, getStatusText } from '@/utils/status-utils';
 import type { AuditLog, AuditMetricsResponse, StatusResponse, VaultLite } from '@lwshen/vault-hub-ts-fetch-client';
 import { formatTimestamp, getActionTitle, getIconForAction } from '@/utils/audit-log';
 import {
@@ -46,37 +48,6 @@ export default function DashboardContent() {
     fetchVaults();
   }, [fetchVaults]);
 
-  const stats = [
-    {
-      title: 'Total Events (30 days)',
-      value: metrics?.totalEventsLast30Days?.toString() || '-',
-      icon: Activity,
-      change: 'Last 30 days',
-      changeType: 'neutral' as const,
-    },
-    {
-      title: 'Events (24 hours)',
-      value: metrics?.eventsCountLast24Hours?.toString() || '-',
-      icon: Users,
-      change: 'Last 24 hours',
-      changeType: 'positive' as const,
-    },
-    {
-      title: 'Vault Events (30 days)',
-      value: metrics?.vaultEventsLast30Days?.toString() || '-',
-      icon: Vault,
-      change: 'Last 30 days',
-      changeType: 'positive' as const,
-    },
-    {
-      title: 'API Key Events (30 days)',
-      value: metrics?.apiKeyEventsLast30Days?.toString() || '-',
-      icon: Key,
-      change: 'Last 30 days',
-      changeType: 'neutral' as const,
-    },
-  ];
-
   // Get recent vaults (sorted by updatedAt, limit to 4)
   const recentVaults = vaults
     .filter(vault => vault.updatedAt && !isNaN(new Date(vault.updatedAt).getTime()))
@@ -85,32 +56,6 @@ export default function DashboardContent() {
 
   const handleViewVaultValue = (vault: VaultLite) => {
     navigate(`/dashboard/vaults/${vault.uniqueId}`);
-  };
-
-  const getStatusColor = (status?: string) => {
-    switch (status) {
-      case 'healthy':
-        return 'bg-green-500';
-      case 'degraded':
-        return 'bg-yellow-500';
-      case 'unavailable':
-        return 'bg-red-500';
-      default:
-        return 'bg-gray-500';
-    }
-  };
-
-  const getStatusText = (status?: string) => {
-    switch (status) {
-      case 'healthy':
-        return 'Healthy';
-      case 'degraded':
-        return 'Degraded';
-      case 'unavailable':
-        return 'Unavailable';
-      default:
-        return 'Unknown';
-    }
   };
 
   return (
@@ -131,33 +76,38 @@ export default function DashboardContent() {
       <main className="flex-1 overflow-y-auto p-6 space-y-6">
         {/* Stats Grid */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {stats.map((stat) => {
-            const Icon = stat.icon;
-            return (
-              <Card key={stat.title} className="p-6">
-                <div className="flex items-center justify-between space-y-0 pb-2">
-                  <h3 className="text-sm font-medium text-muted-foreground">
-                    {stat.title}
-                  </h3>
-                  <Icon className="h-4 w-4 text-muted-foreground" />
-                </div>
-                <div className="space-y-1">
-                  {loading ? (
-                    <Loader2 className="h-4 w-4 animate-spin inline" />
-                  ) : (
-                    <div className="text-2xl font-bold">{stat.value}</div>
-                  )}
-                  <p className={`text-xs ${
-                    stat.changeType === 'positive'
-                      ? 'text-green-600'
-                      : 'text-muted-foreground'
-                  }`}>
-                    {stat.change}
-                  </p>
-                </div>
-              </Card>
-            );
-          })}
+          <StatCard
+            title="Total Events (30 days)"
+            value={metrics?.totalEventsLast30Days?.toString() || '-'}
+            icon={Activity}
+            subtitle="Last 30 days"
+            iconColor="text-blue-500"
+            isLoading={loading}
+          />
+          <StatCard
+            title="Events (24 hours)"
+            value={metrics?.eventsCountLast24Hours?.toString() || '-'}
+            icon={Users}
+            subtitle="Last 24 hours"
+            iconColor="text-orange-500"
+            isLoading={loading}
+          />
+          <StatCard
+            title="Vault Events (30 days)"
+            value={metrics?.vaultEventsLast30Days?.toString() || '-'}
+            icon={Vault}
+            subtitle="Last 30 days"
+            iconColor="text-green-500"
+            isLoading={loading}
+          />
+          <StatCard
+            title="API Key Events (30 days)"
+            value={metrics?.apiKeyEventsLast30Days?.toString() || '-'}
+            icon={Key}
+            subtitle="Last 30 days"
+            iconColor="text-cyan-500"
+            isLoading={loading}
+          />
         </div>
 
         {/* Main Content Grid */}
