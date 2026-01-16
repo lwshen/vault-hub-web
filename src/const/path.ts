@@ -10,6 +10,7 @@ export const PATH = {
   VAULT_DETAIL: '/dashboard/vaults/:vaultId',
   AUDIT_LOG: '/dashboard/audit-log',
   API_KEYS: '/dashboard/api-keys',
+  SETTINGS: '/dashboard/settings',
   FEATURES: '/features',
   ABOUT: '/about',
   DOCS: '/docs',
