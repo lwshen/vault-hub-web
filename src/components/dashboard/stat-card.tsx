@@ -1,4 +1,4 @@
-import { Card } from '@/components/ui/card';
+import { Card } from '@/components/ui/card.tsx';
 import { Loader2 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 

@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { StatCard } from '@/components/ui/stat-card';
+import { StatCard } from '@/components/dashboard/stat-card.tsx';
 import {
   Table,
   TableBody,

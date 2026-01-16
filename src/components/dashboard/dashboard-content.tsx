@@ -1,7 +1,7 @@
 import { auditApi, statusApi } from '@/apis/api';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { StatCard } from '@/components/ui/stat-card';
+import { StatCard } from '@/components/dashboard/stat-card.tsx';
 import { useVaultStore } from '@/stores/vault-store';
 import { getStatusColor, getStatusText } from '@/utils/status-utils';
 import type { AuditLog, AuditMetricsResponse, StatusResponse, VaultLite } from '@lwshen/vault-hub-ts-fetch-client';
