@@ -121,7 +121,10 @@ export default function Header() {
                     {user?.email}
                   </div>
                   <DropdownMenuSeparator className="bg-border" />
-                  <DropdownMenuItem className="cursor-pointer focus:bg-accent">
+                  <DropdownMenuItem
+                    className="cursor-pointer focus:bg-accent"
+                    onClick={() => navigate(PATH.SETTINGS)}
+                  >
                     <Settings size={16} className="mr-2" />
                     <span>Settings</span>
                   </DropdownMenuItem>
@@ -228,6 +231,10 @@ export default function Header() {
                   <div className="mt-3 space-y-1">
                     <Button
                       variant="ghost"
+                      onClick={() => {
+                        navigate(PATH.SETTINGS);
+                        setMobileMenuOpen(false);
+                      }}
                       className="w-full justify-start text-foreground/60 hover:text-foreground hover:bg-accent/50"
                     >
                       Settings
