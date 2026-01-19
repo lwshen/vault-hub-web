@@ -18,7 +18,7 @@
     "@codemirror/lang-sql": "^6.10.0",
     "@codemirror/lang-xml": "^6.1.0",
     "@codemirror/lang-yaml": "^6.1.2",
-    "@codemirror/state": "^6.5.3",
+    "@codemirror/state": "^6.5.4",
     "@codemirror/theme-one-dark": "^6.1.3",
     "@lwshen/vault-hub-ts-fetch-client": "1.4.20",
     "@radix-ui/react-alert-dialog": "^1.1.15",
