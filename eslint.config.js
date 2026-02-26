@@ -64,4 +64,14 @@ export default tseslint.config(
       '@stylistic/spaced-comment': ['error', 'always', { exceptions: ['-', '=', '*'] }],
     },
   },
+  {
+    files: ['**/*.test.{ts,tsx}'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        ...globals.vitest,
+      },
+    },
+  },
 )
