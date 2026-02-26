@@ -1,0 +1,117 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Structural snapshot > 'API Keys' page structure matches snapshot 1`] = `
+{
+  "contentAreaClasses": "flex flex-1 flex-col h-full overflow-hidden",
+  "h1Count": 1,
+  "headerClasses": "bg-card border-b border-border flex-shrink-0 p-6",
+  "headerTag": "header",
+  "navItems": [
+    {
+      "href": "/dashboard",
+      "label": "Dashboard",
+    },
+    {
+      "href": "/dashboard/vaults",
+      "label": "Vaults",
+    },
+    {
+      "href": "/dashboard/api-keys",
+      "label": "API Keys",
+    },
+    {
+      "href": "/dashboard/audit-log",
+      "label": "Audit Log",
+    },
+  ],
+  "rootClasses": "bg-background flex h-full overflow-hidden",
+  "sidebarPanelClasses": "bg-card border-border border-r flex-col h-full hidden md:flex w-64",
+}
+`;
+
+exports[`Structural snapshot > 'Audit Log' page structure matches snapshot 1`] = `
+{
+  "contentAreaClasses": "flex flex-1 flex-col h-full overflow-hidden",
+  "h1Count": 1,
+  "headerClasses": "bg-card border-b border-border flex-shrink-0 p-6",
+  "headerTag": "header",
+  "navItems": [
+    {
+      "href": "/dashboard",
+      "label": "Dashboard",
+    },
+    {
+      "href": "/dashboard/vaults",
+      "label": "Vaults",
+    },
+    {
+      "href": "/dashboard/api-keys",
+      "label": "API Keys",
+    },
+    {
+      "href": "/dashboard/audit-log",
+      "label": "Audit Log",
+    },
+  ],
+  "rootClasses": "bg-background flex h-full overflow-hidden",
+  "sidebarPanelClasses": "bg-card border-border border-r flex-col h-full hidden md:flex w-64",
+}
+`;
+
+exports[`Structural snapshot > 'Dashboard' page structure matches snapshot 1`] = `
+{
+  "contentAreaClasses": "flex flex-1 flex-col h-full overflow-hidden",
+  "h1Count": 1,
+  "headerClasses": "bg-card border-b border-border flex-shrink-0 p-6",
+  "headerTag": "header",
+  "navItems": [
+    {
+      "href": "/dashboard",
+      "label": "Dashboard",
+    },
+    {
+      "href": "/dashboard/vaults",
+      "label": "Vaults",
+    },
+    {
+      "href": "/dashboard/api-keys",
+      "label": "API Keys",
+    },
+    {
+      "href": "/dashboard/audit-log",
+      "label": "Audit Log",
+    },
+  ],
+  "rootClasses": "bg-background flex h-full overflow-hidden",
+  "sidebarPanelClasses": "bg-card border-border border-r flex-col h-full hidden md:flex w-64",
+}
+`;
+
+exports[`Structural snapshot > 'Vaults' page structure matches snapshot 1`] = `
+{
+  "contentAreaClasses": "flex flex-1 flex-col h-full overflow-hidden",
+  "h1Count": 1,
+  "headerClasses": "bg-card border-b border-border flex-shrink-0 p-6",
+  "headerTag": "header",
+  "navItems": [
+    {
+      "href": "/dashboard",
+      "label": "Dashboard",
+    },
+    {
+      "href": "/dashboard/vaults",
+      "label": "Vaults",
+    },
+    {
+      "href": "/dashboard/api-keys",
+      "label": "API Keys",
+    },
+    {
+      "href": "/dashboard/audit-log",
+      "label": "Audit Log",
+    },
+  ],
+  "rootClasses": "bg-background flex h-full overflow-hidden",
+  "sidebarPanelClasses": "bg-card border-border border-r flex-col h-full hidden md:flex w-64",
+}
+`;

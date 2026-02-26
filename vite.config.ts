@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import path from 'path';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig, loadEnv } from 'vite';
@@ -21,6 +22,13 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
         },
       },
+    },
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      setupFiles: ['./src/test/setup.ts'],
+      css: false,
+      include: ['src/**/*.test.{ts,tsx}'],
     },
     build: {
       outDir: 'dist',
