@@ -9,7 +9,10 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "typecheck": "tsc -b"
+    "typecheck": "tsc -b",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:update": "playwright test --update-snapshots"
   },
   "dependencies": {
     "@codemirror/lang-javascript": "^6.2.4",
@@ -57,6 +60,7 @@
   "devDependencies": {
     "@eslint-react/eslint-plugin": "^2.8.4",
     "@eslint/js": "^9.39.2",
+    "@playwright/test": "1.48.2",
     "@stylistic/eslint-plugin": "^5.6.1",
     "@types/node": "^25.0.9",
     "@types/react": "^19.2.8",
