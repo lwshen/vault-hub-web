@@ -1,1 +1,1 @@
-*.snap -whitespace
+*.snap -whitespace linguist-generated=true

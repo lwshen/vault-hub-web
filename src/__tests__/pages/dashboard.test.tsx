@@ -25,9 +25,11 @@ vi.mock('@/apis/api', () => ({
 }));
 
 vi.mock('@/hooks/use-app-config', () => ({
-  default: () => ({
-    config: { oidcEnabled: false, emailEnabled: true },
-    isLoading: false,
+  useAppConfig: () => ({
+    oidcEnabled: false,
+    emailEnabled: true,
+    demoEnabled: false,
+    configLoading: false,
   }),
 }));
 

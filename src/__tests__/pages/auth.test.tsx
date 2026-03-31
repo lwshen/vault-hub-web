@@ -50,8 +50,36 @@ describe('Auth Pages Snapshots', () => {
     expect(container).toMatchSnapshot();
   });
 
+  it('ResetPassword page matches snapshot (with token)', () => {
+    const original = window.location.search;
+    Object.defineProperty(window, 'location', {
+      value: { ...window.location, search: '?token=valid-reset-token-1234567890' },
+      writable: true,
+    });
+    const { container } = renderWithProviders(<ResetPassword />);
+    expect(container).toMatchSnapshot();
+    Object.defineProperty(window, 'location', {
+      value: { ...window.location, search: original },
+      writable: true,
+    });
+  });
+
   it('MagicLink page matches snapshot (no token)', () => {
     const { container } = renderWithProviders(<MagicLink />);
     expect(container).toMatchSnapshot();
+  });
+
+  it('MagicLink page matches snapshot (with token)', () => {
+    const original = window.location.search;
+    Object.defineProperty(window, 'location', {
+      value: { ...window.location, search: '?token=valid-magic-link-token-1234567890' },
+      writable: true,
+    });
+    const { container } = renderWithProviders(<MagicLink />);
+    expect(container).toMatchSnapshot();
+    Object.defineProperty(window, 'location', {
+      value: { ...window.location, search: original },
+      writable: true,
+    });
   });
 });
