@@ -1,0 +1,72 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Dashboard Pages Snapshots > ApiKeys page matches snapshot 1`] = `
+<div>
+  <div
+    data-testid="dashboard-layout"
+  >
+    <div
+      data-testid="api-keys-content"
+    >
+      API Keys Content
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Dashboard Pages Snapshots > AuditLog page matches snapshot 1`] = `
+<div>
+  <div
+    data-testid="dashboard-layout"
+  >
+    <div
+      data-testid="audit-log-content"
+    >
+      Audit Log Content
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Dashboard Pages Snapshots > Dashboard page matches snapshot 1`] = `
+<div>
+  <div
+    data-testid="dashboard-layout"
+  >
+    <div
+      data-testid="dashboard-content"
+    >
+      Dashboard Content
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Dashboard Pages Snapshots > VaultDetail page matches snapshot 1`] = `
+<div>
+  <div
+    data-testid="dashboard-layout"
+  >
+    <div
+      data-testid="vault-detail-content"
+    >
+      Vault Detail: 
+      test-vault-123
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Dashboard Pages Snapshots > Vaults page matches snapshot 1`] = `
+<div>
+  <div
+    data-testid="dashboard-layout"
+  >
+    <div
+      data-testid="vaults-content"
+    >
+      Vaults Content
+    </div>
+  </div>
+</div>
+`;
