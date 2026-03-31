@@ -1,3 +1,4 @@
+import React from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { render } from '@testing-library/react';
 import Features from '@/pages/features';
@@ -9,8 +10,7 @@ vi.mock('framer-motion', () => ({
     {
       get: (_target, prop: string) => {
         return ({ children, className, ...rest }: Record<string, unknown>) => {
-          const Tag = prop as keyof JSX.IntrinsicElements;
-          return <Tag className={className as string} data-testid={rest['data-testid'] as string}>{children as React.ReactNode}</Tag>;
+          return React.createElement(prop, { className, 'data-testid': rest['data-testid'] }, children as React.ReactNode);
         };
       },
     },
