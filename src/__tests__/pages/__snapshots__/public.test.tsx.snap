@@ -1,0 +1,1200 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Public Pages Snapshots > Documentation page matches snapshot 1`] = `
+<div>
+  <div
+    class="min-h-screen bg-background"
+  >
+    <section
+      class="relative py-20 md:py-32 overflow-hidden"
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-emerald-500/[0.03] via-transparent to-blue-500/[0.03]"
+      />
+      <div
+        class="container mx-auto px-4 md:px-6 relative z-10"
+      >
+        <div
+          class="max-w-4xl mx-auto text-center"
+        >
+          <div
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted border border-border mb-8"
+          >
+            <div
+              class="flex items-center justify-center w-5 h-5 bg-blue-500/20 rounded-full"
+            >
+              <svg
+                class="text-blue-500"
+                fill="none"
+                height="12"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="12"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a2.5 2.5 0 0 1 0-5H20"
+                />
+              </svg>
+            </div>
+            <span
+              class="text-sm text-muted-foreground font-medium"
+            >
+              Documentation
+            </span>
+          </div>
+          <h1
+            class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 tracking-tight"
+          >
+            <span
+              class="bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/80"
+            >
+              Get Started with
+            </span>
+            <br />
+            <span
+              class="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 via-primary to-blue-500"
+            >
+              VaultHub
+            </span>
+          </h1>
+          <p
+            class="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto"
+          >
+            Start with the CLI for quick access to your secrets, then explore server setup and API integration for team workflows.
+          </p>
+        </div>
+      </div>
+    </section>
+    <div
+      class="container mx-auto px-4 md:px-6 py-20"
+    >
+      <div
+        class="flex flex-col lg:flex-row gap-12"
+      >
+        <aside
+          class="lg:w-64 lg:flex-shrink-0"
+        >
+          <div
+            class="sticky top-24"
+          >
+            <nav
+              class="space-y-2"
+            >
+              <button
+                class="block w-full text-left font-medium text-sm transition-colors px-3 py-2 rounded-lg text-primary bg-primary/10"
+                type="button"
+              >
+                CLI Guide
+              </button>
+              <button
+                class="block w-full text-left font-medium text-sm transition-colors px-3 py-2 rounded-lg text-foreground hover:text-primary hover:bg-muted/50"
+                type="button"
+              >
+                Server Setup
+              </button>
+            </nav>
+          </div>
+        </aside>
+        <main
+          class="flex-1 max-w-4xl"
+        >
+          <div
+            data-testid="markdown"
+          >
+            # CLI Guide
+Sample content
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Public Pages Snapshots > Features page matches snapshot 1`] = `
+<div>
+  <div
+    class="min-h-screen bg-background"
+  >
+    <section
+      class="relative py-20 md:py-32 overflow-hidden"
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-emerald-500/[0.03] via-transparent to-blue-500/[0.03]"
+      />
+      <div
+        class="container mx-auto px-4 md:px-6 relative z-10"
+      >
+        <div
+          class="max-w-4xl mx-auto text-center"
+        >
+          <div
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted border border-border mb-8"
+          >
+            <div
+              class="flex items-center justify-center w-5 h-5 bg-primary/20 rounded-full"
+            >
+              <svg
+                class="text-primary"
+                fill="none"
+                height="12"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="12"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <polygon
+                  points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"
+                />
+              </svg>
+            </div>
+            <span
+              class="text-sm text-muted-foreground font-medium"
+            >
+              Powerful Features
+            </span>
+          </div>
+          <h1
+            class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 tracking-tight"
+          >
+            <span
+              class="bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/80"
+            >
+              Everything You Need for
+            </span>
+            <br />
+            <span
+              class="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 via-primary to-blue-500"
+            >
+              Secure Configuration
+            </span>
+          </h1>
+          <p
+            class="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto"
+          >
+            VaultHub provides enterprise-grade security with developer-friendly tools to manage your environment variables, API keys, and sensitive configuration data.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section
+      class="py-20 md:py-32"
+    >
+      <div
+        class="container mx-auto px-4 md:px-6"
+      >
+        <div
+          class="text-center mb-16"
+        >
+          <h2
+            class="text-3xl md:text-4xl font-bold mb-4"
+          >
+            Core Features
+          </h2>
+          <p
+            class="text-lg text-muted-foreground max-w-2xl mx-auto"
+          >
+            Built with security, performance, and developer experience in mind
+          </p>
+        </div>
+        <div
+          class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          <div
+            class="group relative p-6 md:p-8 rounded-2xl bg-card border border-border hover:border-border/60 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5"
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            />
+            <div
+              class="relative z-10"
+            >
+              <div
+                class="flex items-center justify-center w-12 h-12 mb-4 bg-primary/10 rounded-xl group-hover:bg-primary/15 transition-colors duration-300"
+              >
+                <svg
+                  class="text-primary"
+                  fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    height="11"
+                    rx="2"
+                    ry="2"
+                    width="18"
+                    x="3"
+                    y="11"
+                  />
+                  <path
+                    d="m7 11 0-4a5 5 0 0 1 10 0v4"
+                  />
+                </svg>
+              </div>
+              <h3
+                class="text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors duration-300"
+              >
+                AES-256-GCM Encryption
+              </h3>
+              <p
+                class="text-muted-foreground leading-relaxed"
+              >
+                Military-grade encryption ensures your secrets are protected at rest and in transit with advanced cryptographic standards.
+              </p>
+            </div>
+          </div>
+          <div
+            class="group relative p-6 md:p-8 rounded-2xl bg-card border border-border hover:border-border/60 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5"
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            />
+            <div
+              class="relative z-10"
+            >
+              <div
+                class="flex items-center justify-center w-12 h-12 mb-4 bg-primary/10 rounded-xl group-hover:bg-primary/15 transition-colors duration-300"
+              >
+                <svg
+                  class="text-primary"
+                  fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    height="14"
+                    rx="2"
+                    ry="2"
+                    width="20"
+                    x="2"
+                    y="3"
+                  />
+                  <line
+                    x1="8"
+                    x2="16"
+                    y1="21"
+                    y2="21"
+                  />
+                  <line
+                    x1="12"
+                    x2="12"
+                    y1="17"
+                    y2="21"
+                  />
+                </svg>
+              </div>
+              <h3
+                class="text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors duration-300"
+              >
+                Web Interface
+              </h3>
+              <p
+                class="text-muted-foreground leading-relaxed"
+              >
+                Modern, responsive React application with intuitive design for managing your vaults and configuration data.
+              </p>
+            </div>
+          </div>
+          <div
+            class="group relative p-6 md:p-8 rounded-2xl bg-card border border-border hover:border-border/60 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5"
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            />
+            <div
+              class="relative z-10"
+            >
+              <div
+                class="flex items-center justify-center w-12 h-12 mb-4 bg-primary/10 rounded-xl group-hover:bg-primary/15 transition-colors duration-300"
+              >
+                <svg
+                  class="text-primary"
+                  fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <polyline
+                    points="4,17 10,11 4,5"
+                  />
+                  <line
+                    x1="12"
+                    x2="20"
+                    y1="19"
+                    y2="19"
+                  />
+                </svg>
+              </div>
+              <h3
+                class="text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors duration-300"
+              >
+                Command Line Interface
+              </h3>
+              <p
+                class="text-muted-foreground leading-relaxed"
+              >
+                Powerful CLI tool for automation, CI/CD integration, and seamless workflow integration across platforms.
+              </p>
+            </div>
+          </div>
+          <div
+            class="group relative p-6 md:p-8 rounded-2xl bg-card border border-border hover:border-border/60 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5"
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            />
+            <div
+              class="relative z-10"
+            >
+              <div
+                class="flex items-center justify-center w-12 h-12 mb-4 bg-primary/10 rounded-xl group-hover:bg-primary/15 transition-colors duration-300"
+              >
+                <svg
+                  class="text-primary"
+                  fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9 12l2 2 4-4"
+                  />
+                  <path
+                    d="M21 12c0 1-1 2-2 2h-1c-1 0-2-1-2-2s1-2 2-2h1c1 0 2 1 2 2z"
+                  />
+                  <path
+                    d="M3 12c0-1 1-2 2-2h1c1 0 2 1 2 2s-1 2-2 2H5c-1 0-2-1-2-2z"
+                  />
+                  <path
+                    d="M18 6h1c1 0 2 1 2 2v8c0 1-1 2-2 2h-1"
+                  />
+                  <path
+                    d="M6 6H5c-1 0-2 1-2 2v8c0 1 1 2 2 2h1"
+                  />
+                </svg>
+              </div>
+              <h3
+                class="text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors duration-300"
+              >
+                API Key Authentication
+              </h3>
+              <p
+                class="text-muted-foreground leading-relaxed"
+              >
+                Secure API keys for programmatic access with fine-grained permissions and access control.
+              </p>
+            </div>
+          </div>
+          <div
+            class="group relative p-6 md:p-8 rounded-2xl bg-card border border-border hover:border-border/60 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5"
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            />
+            <div
+              class="relative z-10"
+            >
+              <div
+                class="flex items-center justify-center w-12 h-12 mb-4 bg-primary/10 rounded-xl group-hover:bg-primary/15 transition-colors duration-300"
+              >
+                <svg
+                  class="text-primary"
+                  fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 20h9"
+                  />
+                  <path
+                    d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"
+                  />
+                </svg>
+              </div>
+              <h3
+                class="text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors duration-300"
+              >
+                Complete Audit Trail
+              </h3>
+              <p
+                class="text-muted-foreground leading-relaxed"
+              >
+                Comprehensive logging of all operations with detailed timestamps and user tracking for compliance.
+              </p>
+            </div>
+          </div>
+          <div
+            class="group relative p-6 md:p-8 rounded-2xl bg-card border border-border hover:border-border/60 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5"
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            />
+            <div
+              class="relative z-10"
+            >
+              <div
+                class="flex items-center justify-center w-12 h-12 mb-4 bg-primary/10 rounded-xl group-hover:bg-primary/15 transition-colors duration-300"
+              >
+                <svg
+                  class="text-primary"
+                  fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
+                  />
+                  <polyline
+                    points="14,2 14,8 20,8"
+                  />
+                  <line
+                    x1="16"
+                    x2="8"
+                    y1="13"
+                    y2="13"
+                  />
+                  <line
+                    x1="16"
+                    x2="8"
+                    y1="17"
+                    y2="17"
+                  />
+                  <polyline
+                    points="10,9 9,9 8,9"
+                  />
+                </svg>
+              </div>
+              <h3
+                class="text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors duration-300"
+              >
+                Environment File Export
+              </h3>
+              <p
+                class="text-muted-foreground leading-relaxed"
+              >
+                Export vault contents as environment files (.env) for seamless integration with your development workflow.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section
+      class="py-20 md:py-32 bg-muted/20"
+    >
+      <div
+        class="container mx-auto px-4 md:px-6"
+      >
+        <div
+          class="grid lg:grid-cols-2 gap-16 items-center"
+        >
+          <div>
+            <div
+              class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6"
+            >
+              <svg
+                class="text-emerald-500"
+                fill="none"
+                height="16"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"
+                />
+                <path
+                  d="m9 12 2 2 4-4"
+                />
+              </svg>
+              <span
+                class="text-sm font-medium text-emerald-600 dark:text-emerald-400"
+              >
+                Security First
+              </span>
+            </div>
+            <h2
+              class="text-3xl md:text-4xl font-bold mb-6"
+            >
+              Enterprise-Grade Security
+            </h2>
+            <p
+              class="text-lg text-muted-foreground mb-8 leading-relaxed"
+            >
+              VaultHub implements multiple layers of security to protect your most sensitive data. From encryption at rest to secure authentication mechanisms.
+            </p>
+            <div
+              class="space-y-4"
+            >
+              <div
+                class="flex items-start gap-4 p-4 rounded-lg hover:bg-muted/50 transition-colors duration-200"
+              >
+                <div
+                  class="flex items-center justify-center w-10 h-10 bg-emerald-500/10 rounded-lg flex-shrink-0"
+                >
+                  <svg
+                    class="text-emerald-500"
+                    fill="none"
+                    height="16"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      height="11"
+                      rx="2"
+                      ry="2"
+                      width="18"
+                      x="3"
+                      y="11"
+                    />
+                    <path
+                      d="m7 11 0-4a5 5 0 0 1 10 0v4"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h4
+                    class="font-medium text-foreground mb-1"
+                  >
+                    End-to-End Encryption
+                  </h4>
+                  <p
+                    class="text-sm text-muted-foreground leading-relaxed"
+                  >
+                    All data is encrypted before storage using AES-256-GCM with unique encryption keys
+                  </p>
+                </div>
+              </div>
+              <div
+                class="flex items-start gap-4 p-4 rounded-lg hover:bg-muted/50 transition-colors duration-200"
+              >
+                <div
+                  class="flex items-center justify-center w-10 h-10 bg-emerald-500/10 rounded-lg flex-shrink-0"
+                >
+                  <svg
+                    class="text-emerald-500"
+                    fill="none"
+                    height="16"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
+                    />
+                    <circle
+                      cx="9"
+                      cy="7"
+                      r="4"
+                    />
+                    <path
+                      d="m22 22-5-5"
+                    />
+                    <path
+                      d="m17 22 5-5"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h4
+                    class="font-medium text-foreground mb-1"
+                  >
+                    JWT & OIDC Authentication
+                  </h4>
+                  <p
+                    class="text-sm text-muted-foreground leading-relaxed"
+                  >
+                    Secure authentication with JWT tokens and optional OIDC integration
+                  </p>
+                </div>
+              </div>
+              <div
+                class="flex items-start gap-4 p-4 rounded-lg hover:bg-muted/50 transition-colors duration-200"
+              >
+                <div
+                  class="flex items-center justify-center w-10 h-10 bg-emerald-500/10 rounded-lg flex-shrink-0"
+                >
+                  <svg
+                    class="text-emerald-500"
+                    fill="none"
+                    height="16"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      height="18"
+                      rx="2"
+                      width="18"
+                      x="3"
+                      y="3"
+                    />
+                    <path
+                      d="M9 9h6v6H9z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h4
+                    class="font-medium text-foreground mb-1"
+                  >
+                    Access Control
+                  </h4>
+                  <p
+                    class="text-sm text-muted-foreground leading-relaxed"
+                  >
+                    Fine-grained permissions and API key-based access control for different vault scopes
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="relative"
+          >
+            <div
+              class="relative bg-card border border-border rounded-2xl p-8 md:p-12"
+            >
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-blue-500/5 rounded-2xl"
+              />
+              <div
+                class="relative z-10"
+              >
+                <div
+                  class="text-center mb-8"
+                >
+                  <div
+                    class="inline-flex items-center justify-center w-16 h-16 bg-emerald-500/10 rounded-2xl mb-4"
+                  >
+                    <svg
+                      class="text-emerald-500"
+                      fill="none"
+                      height="32"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="32"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"
+                      />
+                    </svg>
+                  </div>
+                  <h3
+                    class="text-xl font-semibold mb-2"
+                  >
+                    Security Stats
+                  </h3>
+                </div>
+                <div
+                  class="grid grid-cols-2 gap-6"
+                >
+                  <div
+                    class="text-center"
+                  >
+                    <div
+                      class="text-2xl font-bold text-emerald-500 mb-1"
+                    >
+                      256-bit
+                    </div>
+                    <div
+                      class="text-sm text-muted-foreground"
+                    >
+                      AES Encryption
+                    </div>
+                  </div>
+                  <div
+                    class="text-center"
+                  >
+                    <div
+                      class="text-2xl font-bold text-blue-500 mb-1"
+                    >
+                      100%
+                    </div>
+                    <div
+                      class="text-sm text-muted-foreground"
+                    >
+                      Audit Coverage
+                    </div>
+                  </div>
+                  <div
+                    class="text-center"
+                  >
+                    <div
+                      class="text-2xl font-bold text-violet-500 mb-1"
+                    >
+                      Zero
+                    </div>
+                    <div
+                      class="text-sm text-muted-foreground"
+                    >
+                      Plain Text Storage
+                    </div>
+                  </div>
+                  <div
+                    class="text-center"
+                  >
+                    <div
+                      class="text-2xl font-bold text-amber-500 mb-1"
+                    >
+                      Multi
+                    </div>
+                    <div
+                      class="text-sm text-muted-foreground"
+                    >
+                      Auth Methods
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section
+      class="py-20 md:py-32"
+    >
+      <div
+        class="container mx-auto px-4 md:px-6"
+      >
+        <div
+          class="text-center mb-16"
+        >
+          <h2
+            class="text-3xl md:text-4xl font-bold mb-4"
+          >
+            Developer Experience
+          </h2>
+          <p
+            class="text-lg text-muted-foreground max-w-2xl mx-auto"
+          >
+            Built by developers, for developers. Integrate seamlessly with your existing workflow.
+          </p>
+        </div>
+        <div
+          class="grid lg:grid-cols-3 gap-8"
+        >
+          <div
+            class="bg-card border border-border rounded-xl p-6"
+          >
+            <div
+              class="flex items-center gap-3 mb-4"
+            >
+              <div
+                class="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center"
+              >
+                <svg
+                  class="text-blue-500"
+                  fill="none"
+                  height="20"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <polyline
+                    points="4,17 10,11 4,5"
+                  />
+                  <line
+                    x1="12"
+                    x2="20"
+                    y1="19"
+                    y2="19"
+                  />
+                </svg>
+              </div>
+              <h3
+                class="text-lg font-semibold"
+              >
+                CLI Integration
+              </h3>
+            </div>
+            <p
+              class="text-sm text-muted-foreground mb-4"
+            >
+              Powerful command-line interface for automation, CI/CD pipelines, and developer workflows.
+            </p>
+            <div
+              class="bg-muted/50 rounded-lg p-3 font-mono text-sm mb-4"
+            >
+              <div
+                class="text-emerald-500"
+              >
+                $ vault-hub get --name prod-secrets
+              </div>
+              <div
+                class="text-muted-foreground"
+              >
+                API_KEY=***
+              </div>
+              <div
+                class="text-muted-foreground"
+              >
+                DATABASE_URL=***
+              </div>
+            </div>
+            <div
+              class="space-y-2 text-xs text-muted-foreground"
+            >
+              <div>
+                • List and manage vaults
+              </div>
+              <div>
+                • Execute commands with env vars
+              </div>
+              <div>
+                • Cross-platform binaries
+              </div>
+            </div>
+          </div>
+          <div
+            class="bg-card border border-border rounded-xl p-6"
+          >
+            <div
+              class="flex items-center gap-3 mb-4"
+            >
+              <div
+                class="w-10 h-10 bg-violet-500/10 rounded-lg flex items-center justify-center"
+              >
+                <svg
+                  class="text-violet-500"
+                  fill="none"
+                  height="20"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 2v4"
+                  />
+                  <path
+                    d="M16 2v4"
+                  />
+                  <rect
+                    height="18"
+                    rx="2"
+                    width="18"
+                    x="3"
+                    y="4"
+                  />
+                  <path
+                    d="M3 10h18"
+                  />
+                </svg>
+              </div>
+              <h3
+                class="text-lg font-semibold"
+              >
+                OpenAPI Integration
+              </h3>
+            </div>
+            <p
+              class="text-sm text-muted-foreground mb-4"
+            >
+              Complete OpenAPI 3.0 specification with auto-generated client libraries for seamless integration.
+            </p>
+            <div
+              class="bg-muted/50 rounded-lg p-3 font-mono text-sm mb-4"
+            >
+              <div
+                class="text-violet-500"
+              >
+                // Auto-generated TypeScript client
+              </div>
+              <div
+                class="text-muted-foreground"
+              >
+                const response = await api.getVault(
+                {
+                name
+                }
+                );
+              </div>
+              <div
+                class="text-muted-foreground"
+              >
+                console.log(response.data.value);
+              </div>
+            </div>
+            <div
+              class="space-y-2 text-xs text-muted-foreground"
+            >
+              <div>
+                • TypeScript & Go clients
+              </div>
+              <div>
+                • Auto-generated from spec
+              </div>
+              <div>
+                • Type-safe API interactions
+              </div>
+            </div>
+          </div>
+          <div
+            class="bg-card border border-border rounded-xl p-6"
+          >
+            <div
+              class="flex items-center gap-3 mb-4"
+            >
+              <div
+                class="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center"
+              >
+                <svg
+                  class="text-emerald-500"
+                  fill="none"
+                  height="20"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                  />
+                  <path
+                    d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"
+                  />
+                  <path
+                    d="M2 12h20"
+                  />
+                </svg>
+              </div>
+              <h3
+                class="text-lg font-semibold"
+              >
+                Cross-Platform
+              </h3>
+            </div>
+            <p
+              class="text-sm text-muted-foreground mb-4"
+            >
+              Native binaries for all major operating systems and architectures.
+            </p>
+            <div
+              class="grid grid-cols-3 gap-3 mb-4"
+            >
+              <div
+                class="text-center p-3 rounded-lg bg-muted/30"
+              >
+                <div
+                  class="w-6 h-6 mx-auto mb-1 bg-blue-500/10 rounded flex items-center justify-center"
+                >
+                  <svg
+                    class="text-blue-500"
+                    fill="none"
+                    height="12"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="12"
+                  >
+                    <rect
+                      height="14"
+                      rx="2"
+                      ry="2"
+                      width="20"
+                      x="2"
+                      y="3"
+                    />
+                    <line
+                      x1="8"
+                      x2="16"
+                      y1="21"
+                      y2="21"
+                    />
+                    <line
+                      x1="12"
+                      x2="12"
+                      y1="17"
+                      y2="21"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="text-xs font-medium"
+                >
+                  Linux
+                </div>
+              </div>
+              <div
+                class="text-center p-3 rounded-lg bg-muted/30"
+              >
+                <div
+                  class="w-6 h-6 mx-auto mb-1 bg-emerald-500/10 rounded flex items-center justify-center"
+                >
+                  <svg
+                    class="text-emerald-500"
+                    fill="none"
+                    height="12"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="12"
+                  >
+                    <rect
+                      height="14"
+                      rx="2"
+                      ry="2"
+                      width="20"
+                      x="2"
+                      y="3"
+                    />
+                    <line
+                      x1="8"
+                      x2="16"
+                      y1="21"
+                      y2="21"
+                    />
+                    <line
+                      x1="12"
+                      x2="12"
+                      y1="17"
+                      y2="21"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="text-xs font-medium"
+                >
+                  Windows
+                </div>
+              </div>
+              <div
+                class="text-center p-3 rounded-lg bg-muted/30"
+              >
+                <div
+                  class="w-6 h-6 mx-auto mb-1 bg-amber-500/10 rounded flex items-center justify-center"
+                >
+                  <svg
+                    class="text-amber-500"
+                    fill="none"
+                    height="12"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="12"
+                  >
+                    <rect
+                      height="14"
+                      rx="2"
+                      ry="2"
+                      width="20"
+                      x="2"
+                      y="3"
+                    />
+                    <line
+                      x1="8"
+                      x2="16"
+                      y1="21"
+                      y2="21"
+                    />
+                    <line
+                      x1="12"
+                      x2="12"
+                      y1="17"
+                      y2="21"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="text-xs font-medium"
+                >
+                  macOS
+                </div>
+              </div>
+            </div>
+            <div
+              class="space-y-2 text-xs text-muted-foreground"
+            >
+              <div>
+                • amd64 & arm64 support
+              </div>
+              <div>
+                • Statically linked binaries
+              </div>
+              <div>
+                • Single binary deployment
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+`;

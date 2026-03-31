@@ -1,0 +1,805 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Auth Pages Snapshots > ForgotPassword page matches snapshot 1`] = `
+<div>
+  <div
+    class="flex min-h-full flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10"
+  >
+    <div
+      class="flex w-full max-w-sm flex-col gap-6"
+    >
+      <div
+        class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm"
+        data-slot="card"
+      >
+        <div
+          class="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 text-center"
+          data-slot="card-header"
+        >
+          <div
+            class="font-semibold text-xl"
+            data-slot="card-title"
+          >
+            Reset your password
+          </div>
+        </div>
+        <div
+          class="px-6"
+          data-slot="card-content"
+        >
+          <form
+            class="grid gap-6"
+          >
+            <div
+              class="grid gap-3"
+            >
+              <label
+                class="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+                data-slot="label"
+                for="email"
+              >
+                Email
+              </label>
+              <input
+                autocomplete="email"
+                class="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                data-slot="input"
+                id="email"
+                required=""
+                type="email"
+                value=""
+              />
+            </div>
+            <button
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3 w-full"
+              data-slot="button"
+              type="submit"
+            >
+              Send reset link
+            </button>
+            <p
+              class="text-center text-sm text-muted-foreground"
+            >
+              Remember your password?
+               
+              <a
+                class="text-primary underline-offset-2 hover:underline"
+                href="/login"
+              >
+                Go back to login
+              </a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Auth Pages Snapshots > Login page matches snapshot 1`] = `
+<div>
+  <div
+    class="flex min-h-full flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10"
+  >
+    <div
+      class="flex w-full max-w-sm flex-col gap-6"
+    >
+      <div
+        class="flex flex-col gap-6"
+      >
+        <div
+          class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm"
+          data-slot="card"
+        >
+          <div
+            class="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 text-center"
+            data-slot="card-header"
+          >
+            <div
+              class="font-semibold text-xl"
+              data-slot="card-title"
+            >
+              Welcome back
+            </div>
+          </div>
+          <div
+            class="px-6"
+            data-slot="card-content"
+          >
+            <div
+              class="grid gap-6"
+            >
+              <form
+                class="grid gap-6"
+              >
+                <div
+                  class="grid gap-3"
+                >
+                  <label
+                    class="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+                    data-slot="label"
+                    for="email"
+                  >
+                    Email
+                  </label>
+                  <input
+                    autocomplete="email"
+                    class="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                    data-slot="input"
+                    id="email"
+                    required=""
+                    type="email"
+                    value=""
+                  />
+                </div>
+                <button
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3 w-full"
+                  data-slot="button"
+                  type="submit"
+                >
+                  Next
+                </button>
+                <button
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive underline-offset-4 hover:underline py-2 has-[>svg]:px-3 h-auto px-0 text-sm text-muted-foreground"
+                  data-slot="button"
+                  type="button"
+                >
+                  Forgot password?
+                </button>
+              </form>
+              <div
+                class="text-center text-sm"
+              >
+                Don't have an account?
+                 
+                <button
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive text-primary underline-offset-4 hover:underline h-9 px-4 py-2 has-[>svg]:px-3"
+                  data-slot="button"
+                >
+                  Sign up
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Auth Pages Snapshots > MagicLink page matches snapshot (no token) 1`] = `
+<div>
+  <div
+    class="flex min-h-full flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10"
+  >
+    <div
+      class="flex w-full max-w-sm flex-col gap-6"
+    >
+      <div
+        class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm"
+        data-slot="card"
+      >
+        <div
+          class="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 text-center"
+          data-slot="card-header"
+        >
+          <div
+            class="font-semibold text-xl"
+            data-slot="card-title"
+          >
+            Magic link sign in
+          </div>
+          <div
+            class="text-muted-foreground text-sm"
+            data-slot="card-description"
+          >
+            We could not find a valid magic link token in this URL.
+          </div>
+        </div>
+        <div
+          class="px-6 grid gap-6 text-sm text-muted-foreground"
+          data-slot="card-content"
+        >
+          <div
+            class="flex items-center gap-2 text-red-500"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-circle-x h-5 w-5"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+              />
+              <path
+                d="m15 9-6 6"
+              />
+              <path
+                d="m9 9 6 6"
+              />
+            </svg>
+            <span>
+              This link is missing a token or has already been used.
+            </span>
+          </div>
+          <div
+            class="grid gap-2"
+          >
+            <p>
+              Request a new magic link to continue.
+            </p>
+            <a
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-9 px-4 py-2 has-[>svg]:px-3"
+              data-slot="button"
+              href="/login"
+            >
+              Back to login
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Auth Pages Snapshots > MagicLink page matches snapshot (with token) 1`] = `
+<div>
+  <div
+    class="flex min-h-full flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10"
+  >
+    <div
+      class="flex w-full max-w-sm flex-col gap-6"
+    >
+      <div
+        class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm"
+        data-slot="card"
+      >
+        <div
+          class="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 text-center"
+          data-slot="card-header"
+        >
+          <div
+            class="font-semibold text-xl"
+            data-slot="card-title"
+          >
+            Magic link sign in
+          </div>
+          <div
+            class="text-muted-foreground text-sm"
+            data-slot="card-description"
+          >
+            Hang tight while we verify your magic link.
+          </div>
+        </div>
+        <div
+          class="px-6 grid gap-6 text-sm text-muted-foreground"
+          data-slot="card-content"
+        >
+          <div
+            class="flex flex-col items-center gap-4"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-loader-circle h-6 w-6 animate-spin text-primary"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21 12a9 9 0 1 1-6.219-8.56"
+              />
+            </svg>
+            <p>
+              Verifying your magic link…
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Auth Pages Snapshots > ResetPassword page matches snapshot (no token) 1`] = `
+<div>
+  <div
+    class="flex min-h-full flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10"
+  >
+    <div
+      class="flex w-full max-w-sm flex-col gap-6"
+    >
+      <div
+        class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm"
+        data-slot="card"
+      >
+        <div
+          class="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 text-center"
+          data-slot="card-header"
+        >
+          <div
+            class="font-semibold text-xl"
+            data-slot="card-title"
+          >
+            Choose a new password
+          </div>
+          <div
+            class="text-muted-foreground text-sm"
+            data-slot="card-description"
+          >
+            Pick a strong password to keep your account secure.
+          </div>
+        </div>
+        <div
+          class="px-6"
+          data-slot="card-content"
+        >
+          <div
+            class="grid gap-4 text-sm text-muted-foreground"
+          >
+            <p>
+              This reset link is invalid or has already been used.
+            </p>
+            <p>
+              Please
+               
+              <a
+                class="text-primary underline-offset-2 hover:underline"
+                href="/forgot-password"
+              >
+                request a new password reset email
+              </a>
+               
+              to continue.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Auth Pages Snapshots > ResetPassword page matches snapshot (with token) 1`] = `
+<div>
+  <div
+    class="flex min-h-full flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10"
+  >
+    <div
+      class="flex w-full max-w-sm flex-col gap-6"
+    >
+      <div
+        class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm"
+        data-slot="card"
+      >
+        <div
+          class="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 text-center"
+          data-slot="card-header"
+        >
+          <div
+            class="font-semibold text-xl"
+            data-slot="card-title"
+          >
+            Choose a new password
+          </div>
+          <div
+            class="text-muted-foreground text-sm"
+            data-slot="card-description"
+          >
+            Pick a strong password to keep your account secure.
+          </div>
+        </div>
+        <div
+          class="px-6"
+          data-slot="card-content"
+        >
+          <form
+            class="grid gap-6"
+          >
+            <div
+              class="grid gap-3"
+            >
+              <label
+                class="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+                data-slot="label"
+                for="password"
+              >
+                New password
+              </label>
+              <input
+                autocomplete="new-password"
+                class="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                data-slot="input"
+                id="password"
+                required=""
+                type="password"
+                value=""
+              />
+            </div>
+            <div
+              class="grid gap-3"
+            >
+              <label
+                class="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+                data-slot="label"
+                for="confirm-password"
+              >
+                Confirm new password
+              </label>
+              <input
+                autocomplete="new-password"
+                class="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                data-slot="input"
+                id="confirm-password"
+                required=""
+                type="password"
+                value=""
+              />
+            </div>
+            <div
+              class="grid gap-2"
+            >
+              <label
+                class="flex items-center gap-2 font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 text-xs uppercase tracking-wide text-muted-foreground"
+                data-slot="label"
+              >
+                Password strength
+              </label>
+              <div
+                class="h-2 w-full rounded-full bg-muted"
+              >
+                <div
+                  class="h-full rounded-full bg-primary transition-all"
+                  style="width: 0%;"
+                />
+              </div>
+              <ul
+                class="grid gap-1 text-sm text-muted-foreground"
+              >
+                <li
+                  class="flex items-center gap-2"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="lucide lucide-circle-x h-4 w-4 text-muted-foreground"
+                    fill="none"
+                    height="24"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                    />
+                    <path
+                      d="m15 9-6 6"
+                    />
+                    <path
+                      d="m9 9 6 6"
+                    />
+                  </svg>
+                  <span>
+                    At least 8 characters
+                  </span>
+                </li>
+                <li
+                  class="flex items-center gap-2"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="lucide lucide-circle-x h-4 w-4 text-muted-foreground"
+                    fill="none"
+                    height="24"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                    />
+                    <path
+                      d="m15 9-6 6"
+                    />
+                    <path
+                      d="m9 9 6 6"
+                    />
+                  </svg>
+                  <span>
+                    One uppercase letter
+                  </span>
+                </li>
+                <li
+                  class="flex items-center gap-2"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="lucide lucide-circle-x h-4 w-4 text-muted-foreground"
+                    fill="none"
+                    height="24"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                    />
+                    <path
+                      d="m15 9-6 6"
+                    />
+                    <path
+                      d="m9 9 6 6"
+                    />
+                  </svg>
+                  <span>
+                    One lowercase letter
+                  </span>
+                </li>
+                <li
+                  class="flex items-center gap-2"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="lucide lucide-circle-x h-4 w-4 text-muted-foreground"
+                    fill="none"
+                    height="24"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                    />
+                    <path
+                      d="m15 9-6 6"
+                    />
+                    <path
+                      d="m9 9 6 6"
+                    />
+                  </svg>
+                  <span>
+                    One number
+                  </span>
+                </li>
+                <li
+                  class="flex items-center gap-2"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="lucide lucide-circle-x h-4 w-4 text-muted-foreground"
+                    fill="none"
+                    height="24"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                    />
+                    <path
+                      d="m15 9-6 6"
+                    />
+                    <path
+                      d="m9 9 6 6"
+                    />
+                  </svg>
+                  <span>
+                    One special character
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <button
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3 w-full"
+              data-slot="button"
+              type="submit"
+            >
+              Update password
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Auth Pages Snapshots > Signup page matches snapshot 1`] = `
+<div>
+  <div
+    class="flex min-h-full flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10"
+  >
+    <div
+      class="flex w-full max-w-sm flex-col gap-6"
+    >
+      <div
+        class="flex flex-col gap-6"
+      >
+        <div
+          class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm"
+          data-slot="card"
+        >
+          <div
+            class="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 text-center"
+            data-slot="card-header"
+          >
+            <div
+              class="font-semibold text-xl"
+              data-slot="card-title"
+            >
+              Create an account
+            </div>
+            <div
+              class="text-muted-foreground text-sm"
+              data-slot="card-description"
+            >
+              Enter your information below to create your account
+            </div>
+          </div>
+          <div
+            class="px-6"
+            data-slot="card-content"
+          >
+            <form>
+              <div
+                class="grid gap-6"
+              >
+                <div
+                  class="grid gap-6"
+                >
+                  <div
+                    class="grid gap-3"
+                  >
+                    <label
+                      class="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+                      data-slot="label"
+                      for="name"
+                    >
+                      Name
+                    </label>
+                    <input
+                      class="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                      data-slot="input"
+                      id="name"
+                      name="name"
+                      required=""
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="grid gap-3"
+                  >
+                    <label
+                      class="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+                      data-slot="label"
+                      for="email"
+                    >
+                      Email
+                    </label>
+                    <input
+                      class="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                      data-slot="input"
+                      id="email"
+                      name="email"
+                      required=""
+                      type="email"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="grid gap-3"
+                  >
+                    <label
+                      class="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+                      data-slot="label"
+                      for="password"
+                    >
+                      Password
+                    </label>
+                    <input
+                      class="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                      data-slot="input"
+                      id="password"
+                      name="password"
+                      required=""
+                      type="password"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="grid gap-3"
+                  >
+                    <label
+                      class="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+                      data-slot="label"
+                      for="confirm-password"
+                    >
+                      Confirm password
+                    </label>
+                    <input
+                      class="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                      data-slot="input"
+                      id="confirm-password"
+                      name="confirmPassword"
+                      required=""
+                      type="password"
+                      value=""
+                    />
+                  </div>
+                  <button
+                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3 w-full"
+                    data-slot="button"
+                    type="submit"
+                  >
+                    Create account
+                  </button>
+                </div>
+                <div
+                  class="text-center text-sm"
+                >
+                  Already have an account?
+                   
+                  <button
+                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive text-primary underline-offset-4 hover:underline h-9 px-4 py-2 has-[>svg]:px-3"
+                    data-slot="button"
+                  >
+                    Sign in
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
