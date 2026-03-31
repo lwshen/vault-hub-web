@@ -28,6 +28,8 @@ jobs:
         run: pnpm install
       - name: Check frontend format
         run: pnpm typecheck && pnpm lint
+      - name: Run tests
+        run: pnpm test
       - name: Build frontend
         run: pnpm build
       - name: Upload build artifacts
