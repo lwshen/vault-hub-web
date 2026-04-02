@@ -33,13 +33,11 @@ export function renderWithProviders(
   const baseContext = authenticated ? authenticatedAuthContext : defaultAuthContext;
   const mergedAuth = { ...baseContext, ...authContext };
 
-  function Wrapper({ children }: { children: React.ReactNode; }) {
-    return (
-      <AuthContext value={mergedAuth}>
-        {children}
-      </AuthContext>
-    );
-  }
+  const wrapper = ({ children }: { children: React.ReactNode; }) => (
+    <AuthContext value={mergedAuth}>
+      {children}
+    </AuthContext>
+  );
 
-  return render(ui, { wrapper: Wrapper, ...options });
+  return render(ui, { wrapper, ...options });
 }

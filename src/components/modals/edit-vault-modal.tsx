@@ -34,14 +34,14 @@ export default function EditVaultModal({ open, onOpenChange, vault, onVaultUpdat
   // Sync form data when vault changes or modal opens
   useEffect(() => {
     if (open && vault) {
-      // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
+      // eslint-disable-next-line @eslint-react/set-state-in-effect
       setFormData({
         name: vault.name || '',
         description: vault.description || '',
         category: vault.category || '',
         favourite: Boolean(vault.favourite),
       });
-      // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
+      // eslint-disable-next-line @eslint-react/set-state-in-effect
       setError(null);
     }
   }, [open, vault]);
