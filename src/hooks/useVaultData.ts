@@ -83,7 +83,7 @@ export function useVaultActions({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
+    // eslint-disable-next-line @eslint-react/set-state-in-effect
     setEditedValue(originalValue);
   }, [originalValue]);
 
