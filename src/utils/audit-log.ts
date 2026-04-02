@@ -4,9 +4,12 @@ import {
   Edit,
   Eye,
   Key,
+  KeyRound,
+  Link,
   Lock,
   LogIn,
   LogOut,
+  Mail,
   Plus,
   Trash2,
   UserPlus,
@@ -25,6 +28,12 @@ export const getIconForAction = (action: AuditLogActionEnum) => {
     [AuditLogActionEnum.CreateApiKey]: { icon: Key, color: 'text-green-500' },
     [AuditLogActionEnum.UpdateApiKey]: { icon: Key, color: 'text-yellow-500' },
     [AuditLogActionEnum.DeleteApiKey]: { icon: Key, color: 'text-red-500' },
+    [AuditLogActionEnum.RequestPasswordReset]: { icon: KeyRound, color: 'text-orange-500' },
+    [AuditLogActionEnum.PasswordReset]: { icon: KeyRound, color: 'text-orange-500' },
+    [AuditLogActionEnum.ChangePassword]: { icon: Lock, color: 'text-yellow-500' },
+    [AuditLogActionEnum.RequestMagicLink]: { icon: Link, color: 'text-blue-500' },
+    [AuditLogActionEnum.MagicLinkLogin]: { icon: LogIn, color: 'text-purple-500' },
+    [AuditLogActionEnum.SendSignupEmail]: { icon: Mail, color: 'text-green-500' },
   };
 
   return iconMap[action] || { icon: Activity, color: 'text-gray-500' };
@@ -43,6 +52,12 @@ export const getActionTitle = (action: AuditLogActionEnum) => {
     [AuditLogActionEnum.CreateApiKey]: 'API key created',
     [AuditLogActionEnum.UpdateApiKey]: 'API key updated',
     [AuditLogActionEnum.DeleteApiKey]: 'API key deleted',
+    [AuditLogActionEnum.RequestPasswordReset]: 'Password reset requested',
+    [AuditLogActionEnum.PasswordReset]: 'Password reset',
+    [AuditLogActionEnum.ChangePassword]: 'Password changed',
+    [AuditLogActionEnum.RequestMagicLink]: 'Magic link requested',
+    [AuditLogActionEnum.MagicLinkLogin]: 'Magic link login',
+    [AuditLogActionEnum.SendSignupEmail]: 'Signup email sent',
   };
 
   return titleMap[action] || action;
